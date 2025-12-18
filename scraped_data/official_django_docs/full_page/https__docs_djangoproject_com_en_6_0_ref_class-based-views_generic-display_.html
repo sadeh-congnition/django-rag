@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+    <meta name="fediverse:creator" content="@django@fosstodon.org" />
+    
+  
+    
+      
+    
+  
+  <link rel="canonical" href="https://docs.djangoproject.com/en/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="el"
+          href="https://docs.djangoproject.com/el/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="en"
+          href="https://docs.djangoproject.com/en/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="es"
+          href="https://docs.djangoproject.com/es/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="fr"
+          href="https://docs.djangoproject.com/fr/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="id"
+          href="https://docs.djangoproject.com/id/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="it"
+          href="https://docs.djangoproject.com/it/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ja"
+          href="https://docs.djangoproject.com/ja/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ko"
+          href="https://docs.djangoproject.com/ko/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pl"
+          href="https://docs.djangoproject.com/pl/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pt-br"
+          href="https://docs.djangoproject.com/pt-br/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="sv"
+          href="https://docs.djangoproject.com/sv/6.0/ref/class-based-views/generic-display/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="zh-hans"
+          href="https://docs.djangoproject.com/zh-hans/6.0/ref/class-based-views/generic-display/">
+  
+
+  <link rel="search"
+        type="application/opensearchdescription+xml"
+        href="https://docs.djangoproject.com/en/6.0/search/description/"
+        title="Django documentation">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="icon" sizes="192x192" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="shortcut icon" href="https://static.djangoproject.com/img/favicon.6dbf28c0650e.ico">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Generic display views | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png"/>
+      <meta property="og:url" content="https://docs.djangoproject.com/en/6.0/ref/class-based-views/generic-display/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Generic display views | Django documentation | Django</title>
+
+    <link rel="stylesheet" href="https://static.djangoproject.com/css/output.7f12b704d16e.css" >
+
+    <script src="https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"></script>
+    
+  </head>
+
+  <body id="generic" class="">
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+
+<header id="top">
+  <div class="container container--flex--wrap--mobile">
+    <a class="logo" href="https://www.djangoproject.com/">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div class="header-mobile-only">
+      
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+      <div class="light-dark-mode-toggle">
+        
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+      </div>
+    </div>
+    <button class="menu-button">
+      <i class="icon icon-reorder"></i>
+      <span class="visuallyhidden">Menu</span>
+    </button>
+    <nav aria-labelledby="navigation-header">
+      <span id="navigation-header" class="visuallyhidden">Main navigation</span>
+      <ul>
+        <li>
+          <a href="https://www.djangoproject.com/start/overview/">Overview</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/download/">Download</a>
+        </li>
+        <li class="active">
+          <a href="https://docs.djangoproject.com/">Documentation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/weblog/">News</a>
+        </li>
+        <li>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Issues</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/community/">Community</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/foundation/">Foundation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/fundraising/">&#9829; Donate</a>
+        </li>
+        <li>
+          
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+        </li>
+        <li>
+          
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/6.0/">Documentation</a></p>
+
+      </div>
+    </section>
+
+    <div id="billboard">
+      
+    </div>
+
+    <div class="container sidebar-right">
+      <main id="main-content">
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      <li class="current-link">
+        <a href="https://docs.djangoproject.com/en/6.0/faq/help/">
+          <span>Getting Help</span>
+        </a>
+      </li>
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/el/6.0/ref/class-based-views/generic-display/">el</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/es/6.0/ref/class-based-views/generic-display/">es</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/fr/6.0/ref/class-based-views/generic-display/">fr</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/id/6.0/ref/class-based-views/generic-display/">id</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/it/6.0/ref/class-based-views/generic-display/">it</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ja/6.0/ref/class-based-views/generic-display/">ja</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ko/6.0/ref/class-based-views/generic-display/">ko</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pl/6.0/ref/class-based-views/generic-display/">pl</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pt-br/6.0/ref/class-based-views/generic-display/">pt-br</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/sv/6.0/ref/class-based-views/generic-display/">sv</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/zh-hans/6.0/ref/class-based-views/generic-display/">zh-hans</a>
+          </li>
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.8/ref/class-based-views/generic-display/">1.8</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.10/ref/class-based-views/generic-display/">1.10</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.11/ref/class-based-views/generic-display/">1.11</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/">2.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.1/ref/class-based-views/generic-display/">2.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/">2.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-display/">3.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.1/ref/class-based-views/generic-display/">3.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.2/ref/class-based-views/generic-display/">3.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-display/">4.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.1/ref/class-based-views/generic-display/">4.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.2/ref/class-based-views/generic-display/">4.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.0/ref/class-based-views/generic-display/">5.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.1/ref/class-based-views/generic-display/">5.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.2/ref/class-based-views/generic-display/">5.2</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/dev/ref/class-based-views/generic-display/">dev</a>
+          </li>
+        
+      
+      <li class="current"
+          title="This document describes Django 6.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>6.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      <li class="current-link">
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <section id="s-generic-display-views">
+<span id="generic-display-views"></span><h1>Generic display views<a class="headerlink" href="#generic-display-views" title="Link to this heading">¶</a></h1>
+<p>The two following generic class-based views are designed to display data. On
+many projects they are typically the most commonly used views.</p>
+<section id="s-detailview">
+<span id="detailview"></span><h2><code class="docutils literal notranslate"><span class="pre">DetailView</span></code><a class="headerlink" href="#detailview" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.detail.DetailView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django.views.generic.detail.</span></span><span class="sig-name descname"><span class="pre">DetailView</span></span><a class="headerlink" href="#django.views.generic.detail.DetailView" title="Link to this definition">¶</a></dt>
+<dd><p>While this view is executing, <code class="docutils literal notranslate"><span class="pre">self.object</span></code> will contain the object that
+the view is operating upon.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectTemplateResponseMixin" title="django.views.generic.detail.SingleObjectTemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectTemplateResponseMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.views.generic.detail.BaseDetailView" title="django.views.generic.detail.BaseDetailView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.BaseDetailView</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin" title="django.views.generic.detail.SingleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></p></li>
+</ul>
+<p><strong>Method Flowchart</strong></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.setup" title="django.views.generic.base.View.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.dispatch" title="django.views.generic.base.View.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dispatch()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.http_method_not_allowed" title="django.views.generic.base.View.http_method_not_allowed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">http_method_not_allowed()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin.get_template_names" title="django.views.generic.base.TemplateResponseMixin.get_template_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_template_names()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_slug_field" title="django.views.generic.detail.SingleObjectMixin.get_slug_field"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_slug_field()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_queryset" title="django.views.generic.detail.SingleObjectMixin.get_queryset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_queryset()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_object" title="django.views.generic.detail.SingleObjectMixin.get_object"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_object()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_context_object_name" title="django.views.generic.detail.SingleObjectMixin.get_context_object_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_object_name()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin.get_context_data" title="django.views.generic.detail.SingleObjectMixin.get_context_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_data()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.views.generic.detail.BaseDetailView.get" title="django.views.generic.detail.BaseDetailView.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin.render_to_response" title="django.views.generic.base.TemplateResponseMixin.render_to_response"><code class="xref py py-meth docutils literal notranslate"><span class="pre">render_to_response()</span></code></a></p></li>
+</ol>
+<p><strong>Example myapp/views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic.detail</span><span class="w"> </span><span class="kn">import</span> <span class="n">DetailView</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">articles.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ArticleDetailView</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Article</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;now&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">context</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/urls.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">article.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticleDetailView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;slug:slug&gt;/&quot;</span><span class="p">,</span> <span class="n">ArticleDetailView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;article-detail&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/article_detail.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">object.headline</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">object.content</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Reporter: <span class="cp">{{</span> <span class="nv">object.reporter</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Published: <span class="cp">{{</span> <span class="nv">object.pub_date</span><span class="o">|</span><span class="nf">date</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Date: <span class="cp">{{</span> <span class="nv">now</span><span class="o">|</span><span class="nf">date</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.detail.BaseDetailView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django.views.generic.detail.</span></span><span class="sig-name descname"><span class="pre">BaseDetailView</span></span><a class="headerlink" href="#django.views.generic.detail.BaseDetailView" title="Link to this definition">¶</a></dt>
+<dd><p>A base view for displaying a single object. It is not intended to be used
+directly, but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.detail.DetailView" title="django.views.generic.detail.DetailView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.DetailView</span></code></a> or other views representing
+details of a single object.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../mixins-single-object/#django.views.generic.detail.SingleObjectMixin" title="django.views.generic.detail.SingleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></p></li>
+</ul>
+<p><strong>Methods</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.BaseDetailView.get">
+<span class="sig-name descname"><span class="pre">get</span></span>(<em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.detail.BaseDetailView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Adds <code class="docutils literal notranslate"><span class="pre">object</span></code> to the context.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="s-listview">
+<span id="listview"></span><h2><code class="docutils literal notranslate"><span class="pre">ListView</span></code><a class="headerlink" href="#listview" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.list.ListView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django.views.generic.list.</span></span><span class="sig-name descname"><span class="pre">ListView</span></span><a class="headerlink" href="#django.views.generic.list.ListView" title="Link to this definition">¶</a></dt>
+<dd><p>A page representing a list of objects.</p>
+<p>While this view is executing, <code class="docutils literal notranslate"><span class="pre">self.object_list</span></code> will contain the list of
+objects (usually, but not necessarily a queryset) that the view is
+operating upon.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectTemplateResponseMixin" title="django.views.generic.list.MultipleObjectTemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.MultipleObjectTemplateResponseMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.views.generic.list.BaseListView" title="django.views.generic.list.BaseListView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.BaseListView</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin" title="django.views.generic.list.MultipleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.MultipleObjectMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></p></li>
+</ul>
+<p><strong>Method Flowchart</strong></p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.setup" title="django.views.generic.base.View.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.dispatch" title="django.views.generic.base.View.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dispatch()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View.http_method_not_allowed" title="django.views.generic.base.View.http_method_not_allowed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">http_method_not_allowed()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin.get_template_names" title="django.views.generic.base.TemplateResponseMixin.get_template_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_template_names()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_queryset" title="django.views.generic.list.MultipleObjectMixin.get_queryset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_queryset()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_context_object_name" title="django.views.generic.list.MultipleObjectMixin.get_context_object_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_object_name()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.get_context_data" title="django.views.generic.list.MultipleObjectMixin.get_context_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_data()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.views.generic.list.BaseListView.get" title="django.views.generic.list.BaseListView.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../mixins-simple/#django.views.generic.base.TemplateResponseMixin.render_to_response" title="django.views.generic.base.TemplateResponseMixin.render_to_response"><code class="xref py py-meth docutils literal notranslate"><span class="pre">render_to_response()</span></code></a></p></li>
+</ol>
+<p><strong>Example views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.views.generic.list</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListView</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">articles.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Article</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ArticleListView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Article</span>
+    <span class="n">paginate_by</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># if pagination is desired</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;now&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">context</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/urls.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">article.views</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArticleListView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ArticleListView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;article-list&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/article_list.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Articles<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">object_list</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">article.pub_date</span><span class="o">|</span><span class="nf">date</span> <span class="cp">}}</span> - <span class="cp">{{</span> <span class="nv">article.headline</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">empty</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>No articles yet.<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>If you’re using pagination, you can adapt the <a class="reference internal" href="../../../topics/pagination/#paginating-a-list-view"><span class="std std-ref">example template from
+the pagination docs</span></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.list.BaseListView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">django.views.generic.list.</span></span><span class="sig-name descname"><span class="pre">BaseListView</span></span><a class="headerlink" href="#django.views.generic.list.BaseListView" title="Link to this definition">¶</a></dt>
+<dd><p>A base view for displaying a list of objects. It is not intended to be used
+directly, but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.list.ListView" title="django.views.generic.list.ListView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></a> or other views representing
+lists of objects.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin" title="django.views.generic.list.MultipleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.MultipleObjectMixin</span></code></a></p></li>
+<li><p><a class="reference internal" href="../base/#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></p></li>
+</ul>
+<p><strong>Methods</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.list.BaseListView.get">
+<span class="sig-name descname"><span class="pre">get</span></span>(<em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.list.BaseListView.get" title="Link to this definition">¶</a></dt>
+<dd><p>Adds <code class="docutils literal notranslate"><span class="pre">object_list</span></code> to the context. If
+<a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.allow_empty" title="django.views.generic.list.MultipleObjectMixin.allow_empty"><code class="xref py py-attr docutils literal notranslate"><span class="pre">allow_empty</span></code></a>
+is True then display an empty list. If
+<a class="reference internal" href="../mixins-multiple-object/#django.views.generic.list.MultipleObjectMixin.allow_empty" title="django.views.generic.list.MultipleObjectMixin.allow_empty"><code class="xref py py-attr docutils literal notranslate"><span class="pre">allow_empty</span></code></a> is
+False then raise a 404 error.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+    </article>
+  
+
+  
+    <nav class="browse-horizontal" aria-labelledby="browse-horizontal-header">
+      <span id="browse-horizontal-header" class="visuallyhidden">Previous page and next page</span>
+      
+        <div class="left"><a rel="prev" href="../base/"><i class="icon icon-chevron-left"></i> Base views</a></div>
+      
+      
+        <div class="right"><a rel="next" href="../generic-editing/">Generic editing views <i class="icon icon-chevron-right"></i></a></div>
+      
+    </nav>
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      <img src="https://static.djangoproject.com/img/fundraising-heart.cd6bb84ffd33.svg" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="https://www.djangoproject.com/fundraising/">
+          Dave Lowe donated to the Django Software Foundation to support Django development. Donate today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+<li><a class="reference internal" href="#">Generic display views</a><ul>
+<li><a class="reference internal" href="#detailview"><code class="docutils literal notranslate"><span class="pre">DetailView</span></code></a></li>
+<li><a class="reference internal" href="#listview"><code class="docutils literal notranslate"><span class="pre">ListView</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      <nav aria-labelledby="browse-header">
+        <h3 id="browse-header">Browse</h3>
+        <ul>
+          
+            
+              <li>Prev: <a rel="prev" href="../base/">Base views</a></li>
+            
+            
+              <li>Next: <a rel="next" href="../generic-editing/">Generic editing views</a></li>
+            
+            <li><a href="https://docs.djangoproject.com/en/6.0/contents/">Table of contents</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/genindex/">General Index</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/py-modindex/">Python Module Index</a></li>
+            
+          
+        </ul>
+      </nav>
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          <li>
+            <a href="https://docs.djangoproject.com/en/6.0/">Django 6.0 documentation</a>
+            
+              <ul><li><a href="../../">API Reference</a>
+            
+              <ul><li><a href="../">Built-in class-based views API</a>
+            
+            <ul><li>Generic display views</li></ul>
+            </li></ul></li></ul>
+          </li>
+        </ul>
+      </nav>
+    
+
+    
+      <section aria-labelledby="getting-help-sidebar">
+        <h3 id="getting-help-sidebar">Getting help</h3>
+        <dl class="list-links">
+          <dt><a href="https://docs.djangoproject.com/en/6.0/faq/">FAQ</a></dt>
+          <dd>Try the FAQ — it's got answers to many common questions.</dd>
+
+          <dt><a href="/en/stable/genindex/">Index</a>, <a href="/en/stable/py-modindex/">Module Index</a>, or <a href="/en/stable/contents/">Table of Contents</a></dt>
+          <dd>Handy when looking for specific information.</dd>
+
+          <dt><a href="https://chat.djangoproject.com">Django Discord Server</a></dt>
+          <dd>Join the Django Discord Community.</dd>
+
+          <dt><a href="https://forum.djangoproject.com/">Official Django Forum</a></dt>
+          <dd>Join the community on the Django Forum.</dd>
+
+          <dt><a href="https://code.djangoproject.com/">Ticket tracker</a></dt>
+          <dd>Report bugs with Django or Django documentation in our ticket tracker.</dd>
+        </dl>
+      </section>
+    
+
+    
+      <section aria-labelledby="links-wrapper-header">
+        <h3 id="links-wrapper-header">Download:</h3>
+        <p>
+          Offline (Django 6.0):
+          <a href="https://media.djangoproject.com/docs/django-docs-6.0-en.zip">HTML</a> |
+          <a href="https://media.readthedocs.org/pdf/django/6.0.x/django.pdf">PDF</a> |
+          <a href="https://media.readthedocs.org/epub/django/6.0.x/django.epub">ePub</a>
+          <br>
+          <span class="quiet">
+            Provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+          </span>
+        </p>
+      </section>
+    
+
+    
+  <div class="corporate-members">
+    <h3>Diamond and Platinum Members</h3>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://sentry.io/for/django/" title="Sentry">
+            <img src="https://media.djangoproject.com/cache/7a/f9/7af9c770dc49465739a82c91a0eb3d51.png" alt="Sentry" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>Sentry</strong></li>
+            <li><a href="https://sentry.io/for/django/" title="Sentry">
+              Monitor your Django Code
+Resolve performance bottlenecks and errors using monitoring, replays, logs and Seer an AI agent for debugging.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://jb.gg/ybja10" title="JetBrains">
+            <img src="https://media.djangoproject.com/cache/c0/ea/c0ea128467983e64aab91cd27e7918c0.png" alt="JetBrains" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>JetBrains</strong></li>
+            <li><a href="https://jb.gg/ybja10" title="JetBrains">
+              JetBrains delivers intelligent software solutions that make developers more productive by simplifying their challenging tasks, automating the routine, and helping them adopt the best development practices. PyCharm is the Python IDE for Professional Developers by JetBrains providing a complete set of tools for productive Python, Web and scientific development.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+  </div>
+
+
+  </div>
+
+      
+
+    </div>
+
+     
+     
+
+    
+    
+    
+
+    <!-- SVGs -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+    </svg>
+    <!-- END SVGs -->
+
+    
+      
+
+<footer>
+  <div class="subfooter">
+    <div class="container">
+      <h2 class="visuallyhidden">Django Links</h2>
+      <div class="column-container">
+        <div class="col-learn-more">
+          <h3>Learn More</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/start/overview/">About Django</a></li>
+            
+            <li><a href="https://www.djangoproject.com/start/">Getting Started with Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/teams/">Team Organization</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/">Django Software Foundation</a></li>
+            <li><a href="https://www.djangoproject.com/conduct/">Code of Conduct</a></li>
+            <li><a href="https://www.djangoproject.com/diversity/">Diversity Statement</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/community/">Join a Group</a></li>
+            <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Contribute
+              to Django</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">Submit
+              a Bug</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/security/#reporting-security-issues">Report
+              a Security Issue</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/individual-members/">Individual membership</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            <li><a href="https://docs.djangoproject.com/en/stable/faq/">Getting Help FAQ</a>
+            </li>
+            <li><a href="https://chat.djangoproject.com" target="_blank">Django Discord</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://github.com/django">GitHub</a></li>
+            <li><a href="https://x.com/djangoproject">X</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
+            <li><a href="https://bsky.app/profile/djangoproject.com">Bluesky</a></li>
+            <li><a href="https://www.linkedin.com/company/django-software-foundation">LinkedIn</a></li>
+            <li><a href="https://www.djangoproject.com/rss/weblog/">News RSS</a></li>
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/fundraising/">Sponsor Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+  
+
+
+    
+      
+      <script>
+        function extless(input) {
+          return input.replace(/(.*)\.[^.]+$/, '$1');
+        }
+        var require = {
+          shim: {
+            'jquery': [],
+            'stripe': {
+              exports: 'Stripe'
+            }
+          },
+          paths: {
+            "jquery": extless("https://static.djangoproject.com/js/lib/jquery.min.5790ead7ad3b.js"),
+            "mod/list-collapsing": extless("https://static.djangoproject.com/js/mod/list-collapsing.2d844151b2ec.js"),
+            "mod/stripe-change-card": extless("https://static.djangoproject.com/js/mod/stripe-change-card.eaa0afc324e9.js"),
+            "mod/switch-dark-mode": extless("https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          }
+        };
+      </script>
+      <script data-main="https://static.djangoproject.com/js/main.8677b21133eb.js" src="https://static.djangoproject.com/js/lib/require.177879fbe7dd.js"></script>
+      <script src="https://static.djangoproject.com/js/djangoproject.15c016c8c3a7.js"></script>
+    
+  </body>
+</html>

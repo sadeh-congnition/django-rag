@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+    <meta name="fediverse:creator" content="@django@fosstodon.org" />
+    
+  
+    
+      
+    
+  
+  <link rel="canonical" href="https://docs.djangoproject.com/en/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="el"
+          href="https://docs.djangoproject.com/el/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="en"
+          href="https://docs.djangoproject.com/en/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="es"
+          href="https://docs.djangoproject.com/es/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="fr"
+          href="https://docs.djangoproject.com/fr/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="id"
+          href="https://docs.djangoproject.com/id/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="it"
+          href="https://docs.djangoproject.com/it/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ja"
+          href="https://docs.djangoproject.com/ja/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ko"
+          href="https://docs.djangoproject.com/ko/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pl"
+          href="https://docs.djangoproject.com/pl/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pt-br"
+          href="https://docs.djangoproject.com/pt-br/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="sv"
+          href="https://docs.djangoproject.com/sv/6.0/howto/custom-management-commands/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="zh-hans"
+          href="https://docs.djangoproject.com/zh-hans/6.0/howto/custom-management-commands/">
+  
+
+  <link rel="search"
+        type="application/opensearchdescription+xml"
+        href="https://docs.djangoproject.com/en/6.0/search/description/"
+        title="Django documentation">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="icon" sizes="192x192" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="shortcut icon" href="https://static.djangoproject.com/img/favicon.6dbf28c0650e.ico">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="How to create custom django-admin commands | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png"/>
+      <meta property="og:url" content="https://docs.djangoproject.com/en/6.0/howto/custom-management-commands/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>How to create custom django-admin commands | Django documentation | Django</title>
+
+    <link rel="stylesheet" href="https://static.djangoproject.com/css/output.7f12b704d16e.css" >
+
+    <script src="https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"></script>
+    
+  </head>
+
+  <body id="generic" class="">
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+
+<header id="top">
+  <div class="container container--flex--wrap--mobile">
+    <a class="logo" href="https://www.djangoproject.com/">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div class="header-mobile-only">
+      
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+      <div class="light-dark-mode-toggle">
+        
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+      </div>
+    </div>
+    <button class="menu-button">
+      <i class="icon icon-reorder"></i>
+      <span class="visuallyhidden">Menu</span>
+    </button>
+    <nav aria-labelledby="navigation-header">
+      <span id="navigation-header" class="visuallyhidden">Main navigation</span>
+      <ul>
+        <li>
+          <a href="https://www.djangoproject.com/start/overview/">Overview</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/download/">Download</a>
+        </li>
+        <li class="active">
+          <a href="https://docs.djangoproject.com/">Documentation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/weblog/">News</a>
+        </li>
+        <li>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Issues</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/community/">Community</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/foundation/">Foundation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/fundraising/">&#9829; Donate</a>
+        </li>
+        <li>
+          
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+        </li>
+        <li>
+          
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/6.0/">Documentation</a></p>
+
+      </div>
+    </section>
+
+    <div id="billboard">
+      
+    </div>
+
+    <div class="container sidebar-right">
+      <main id="main-content">
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      <li class="current-link">
+        <a href="https://docs.djangoproject.com/en/6.0/faq/help/">
+          <span>Getting Help</span>
+        </a>
+      </li>
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/el/6.0/howto/custom-management-commands/">el</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/es/6.0/howto/custom-management-commands/">es</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/fr/6.0/howto/custom-management-commands/">fr</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/id/6.0/howto/custom-management-commands/">id</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/it/6.0/howto/custom-management-commands/">it</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ja/6.0/howto/custom-management-commands/">ja</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ko/6.0/howto/custom-management-commands/">ko</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pl/6.0/howto/custom-management-commands/">pl</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pt-br/6.0/howto/custom-management-commands/">pt-br</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/sv/6.0/howto/custom-management-commands/">sv</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/zh-hans/6.0/howto/custom-management-commands/">zh-hans</a>
+          </li>
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.8/howto/custom-management-commands/">1.8</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.10/howto/custom-management-commands/">1.10</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/1.11/howto/custom-management-commands/">1.11</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.0/howto/custom-management-commands/">2.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.1/howto/custom-management-commands/">2.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/2.2/howto/custom-management-commands/">2.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.0/howto/custom-management-commands/">3.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/">3.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/3.2/howto/custom-management-commands/">3.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.0/howto/custom-management-commands/">4.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.1/howto/custom-management-commands/">4.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/4.2/howto/custom-management-commands/">4.2</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.0/howto/custom-management-commands/">5.0</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.1/howto/custom-management-commands/">5.1</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.2/howto/custom-management-commands/">5.2</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/dev/howto/custom-management-commands/">dev</a>
+          </li>
+        
+      
+      <li class="current"
+          title="This document describes Django 6.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>6.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      <li class="current-link">
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <section id="s-module-django.core.management">
+<span id="s-how-to-create-custom-django-admin-commands"></span><span id="module-django.core.management"></span><span id="how-to-create-custom-django-admin-commands"></span><h1>How to create custom <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> commands<a class="headerlink" href="#module-django.core.management" title="Link to this heading">¶</a></h1>
+<p>Applications can register their own actions with <code class="docutils literal notranslate"><span class="pre">manage.py</span></code>. For example,
+you might want to add a <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> action for a Django app that you’re
+distributing. In this document, we will be building a custom <code class="docutils literal notranslate"><span class="pre">closepoll</span></code>
+command for the <code class="docutils literal notranslate"><span class="pre">polls</span></code> application from the
+<a class="reference internal" href="../../intro/tutorial01/"><span class="doc">tutorial</span></a>.</p>
+<p>To do this, add a <code class="docutils literal notranslate"><span class="pre">management/commands</span></code> directory to the application. Django
+will register a <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> command for each Python module in that directory
+whose name doesn’t begin with an underscore. For example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>polls/
+    __init__.py
+    models.py
+    management/
+        __init__.py
+        commands/
+            __init__.py
+            _private.py
+            closepoll.py
+    tests.py
+    views.py
+</pre></div>
+</div>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">closepoll</span></code> command will be made available to any
+project that includes the <code class="docutils literal notranslate"><span class="pre">polls</span></code> application in <a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">_private.py</span></code> module will not be available as a management command.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">closepoll.py</span></code> module has only one requirement – it must define a class
+<code class="docutils literal notranslate"><span class="pre">Command</span></code> that extends <a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a> or one of its
+<a class="reference internal" href="#ref-basecommand-subclasses"><span class="std std-ref">subclasses</span></a>.</p>
+<div class="admonition-standalone-scripts admonition">
+<p class="admonition-title">Standalone scripts</p>
+<p>Custom management commands are especially useful for running standalone
+scripts or for scripts that are periodically executed from the UNIX crontab
+or from Windows scheduled tasks control panel.</p>
+</div>
+<p>To implement the command, edit <code class="docutils literal notranslate"><span class="pre">polls/management/commands/closepoll.py</span></code> to
+look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">CommandError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">polls.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Question</span> <span class="k">as</span> <span class="n">Poll</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;Closes the specified poll for voting&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;poll_ids&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">poll_id</span> <span class="ow">in</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;poll_ids&quot;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">poll</span> <span class="o">=</span> <span class="n">Poll</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">poll_id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">Poll</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s1">&#39;Poll &quot;</span><span class="si">%s</span><span class="s1">&quot; does not exist&#39;</span> <span class="o">%</span> <span class="n">poll_id</span><span class="p">)</span>
+
+            <span class="n">poll</span><span class="o">.</span><span class="n">opened</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">poll</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s1">&#39;Successfully closed poll &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">poll_id</span><span class="p">)</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note" id="management-commands-output">
+<p class="admonition-title">Note</p>
+<p>When you are using management commands and wish to provide console output,
+you should write to <code class="docutils literal notranslate"><span class="pre">self.stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">self.stderr</span></code>, instead of
+printing to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> directly. By using these proxies, it
+becomes much easier to test your custom command. Note also that you don’t
+need to end messages with a newline character, it will be added
+automatically, unless you specify the <code class="docutils literal notranslate"><span class="pre">ending</span></code> parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Unterminated line&quot;</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The new custom command can be called using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">closepoll</span>
+<span class="pre">&lt;poll_ids&gt;</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">handle()</span></code> method takes one or more <code class="docutils literal notranslate"><span class="pre">poll_ids</span></code> and sets <code class="docutils literal notranslate"><span class="pre">poll.opened</span></code>
+to <code class="docutils literal notranslate"><span class="pre">False</span></code> for each one. If the user referenced any nonexistent polls, a
+<a class="reference internal" href="#django.core.management.CommandError" title="django.core.management.CommandError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CommandError</span></code></a> is raised. The <code class="docutils literal notranslate"><span class="pre">poll.opened</span></code> attribute does not exist in
+the <a class="reference internal" href="../../intro/tutorial02/"><span class="doc">tutorial</span></a> and was added to
+<code class="docutils literal notranslate"><span class="pre">polls.models.Question</span></code> for this example.</p>
+<section id="s-accepting-optional-arguments">
+<span id="s-custom-commands-options"></span><span id="accepting-optional-arguments"></span><span id="custom-commands-options"></span><h2>Accepting optional arguments<a class="headerlink" href="#accepting-optional-arguments" title="Link to this heading">¶</a></h2>
+<p>The same <code class="docutils literal notranslate"><span class="pre">closepoll</span></code> could be easily modified to delete a given poll instead
+of closing it by accepting additional command line options. These custom
+options can be added in the <a class="reference internal" href="#django.core.management.BaseCommand.add_arguments" title="django.core.management.BaseCommand.add_arguments"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_arguments()</span></code></a> method like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="c1"># Positional arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;poll_ids&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Named (optional) arguments</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+            <span class="s2">&quot;--delete&quot;</span><span class="p">,</span>
+            <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Delete poll instead of closing it&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="c1"># ...</span>
+        <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;delete&quot;</span><span class="p">]:</span>
+            <span class="n">poll</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>The option (<code class="docutils literal notranslate"><span class="pre">delete</span></code> in our example) is available in the options dict
+parameter of the handle method. See the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> Python documentation
+for more about <code class="docutils literal notranslate"><span class="pre">add_argument</span></code> usage.</p>
+<p>In addition to being able to add custom command line options, all
+<a class="reference internal" href="../../ref/django-admin/"><span class="doc">management commands</span></a> can accept some default options
+such as <a class="reference internal" href="../../ref/django-admin/#cmdoption-verbosity"><code class="xref std std-option docutils literal notranslate"><span class="pre">--verbosity</span></code></a> and <a class="reference internal" href="../../ref/django-admin/#cmdoption-traceback"><code class="xref std std-option docutils literal notranslate"><span class="pre">--traceback</span></code></a>.</p>
+</section>
+<section id="s-management-commands-and-locales">
+<span id="s-id1"></span><span id="management-commands-and-locales"></span><span id="id1"></span><h2>Management commands and locales<a class="headerlink" href="#management-commands-and-locales" title="Link to this heading">¶</a></h2>
+<p>By default, management commands are executed with the current active locale.</p>
+<p>If, for some reason, your custom management command must run without an active
+locale (for example, to prevent translated content from being inserted into
+the database), deactivate translations using the <code class="docutils literal notranslate"><span class="pre">&#64;no_translations</span></code>
+decorator on your <a class="reference internal" href="#django.core.management.BaseCommand.handle" title="django.core.management.BaseCommand.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseCommand</span><span class="p">,</span> <span class="n">no_translations</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="o">...</span>
+
+    <span class="nd">@no_translations</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Since translation deactivation requires access to configured settings, the
+decorator can’t be used for commands that work without configured settings.</p>
+</section>
+<section id="s-testing">
+<span id="testing"></span><h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">¶</a></h2>
+<p>Information on how to test custom management commands can be found in the
+<a class="reference internal" href="../../topics/testing/tools/#topics-testing-management-commands"><span class="std std-ref">testing docs</span></a>.</p>
+</section>
+<section id="s-overriding-commands">
+<span id="s-id2"></span><span id="overriding-commands"></span><span id="id2"></span><h2>Overriding commands<a class="headerlink" href="#overriding-commands" title="Link to this heading">¶</a></h2>
+<p>Django registers the built-in commands and then searches for commands in
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> in reverse. During the search, if a command name
+duplicates an already registered command, the newly discovered command
+overrides the first.</p>
+<p>In other words, to override a command, the new command must have the same name
+and its app must be before the overridden command’s app in
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>.</p>
+<p>Management commands from third-party apps that have been unintentionally
+overridden can be made available under a new name by creating a new command in
+one of your project’s apps (ordered before the third-party app in
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>) which imports the <code class="docutils literal notranslate"><span class="pre">Command</span></code> of the overridden
+command.</p>
+</section>
+<section id="s-command-objects">
+<span id="command-objects"></span><h2>Command objects<a class="headerlink" href="#command-objects" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseCommand</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L190"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The base class from which all management commands ultimately derive.</p>
+<p>Use this class if you want access to all of the mechanisms which
+parse the command-line arguments and work out what code to call in
+response; if you don’t need to change any of that behavior,
+consider using one of its <a class="reference internal" href="#ref-basecommand-subclasses"><span class="std std-ref">subclasses</span></a>.</p>
+<p>Subclassing the <a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a> class requires that you implement the
+<a class="reference internal" href="#django.core.management.BaseCommand.handle" title="django.core.management.BaseCommand.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method.</p>
+<section id="s-attributes">
+<span id="attributes"></span><h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h3>
+<p>All attributes can be set in your derived class and can be used in
+<a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a>’s <a class="reference internal" href="#ref-basecommand-subclasses"><span class="std std-ref">subclasses</span></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.help">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">help</span></span><a class="headerlink" href="#django.core.management.BaseCommand.help" title="Link to this definition">¶</a></dt>
+<dd><p>A short description of the command, which will be printed in the
+help message when the user runs the command
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">help</span> <span class="pre">&lt;command&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.missing_args_message">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">missing_args_message</span></span><a class="headerlink" href="#django.core.management.BaseCommand.missing_args_message" title="Link to this definition">¶</a></dt>
+<dd><p>If your command defines mandatory positional arguments, you can customize
+the message error returned in the case of missing arguments. The default is
+output by <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> (“too few arguments”).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.output_transaction">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">output_transaction</span></span><a class="headerlink" href="#django.core.management.BaseCommand.output_transaction" title="Link to this definition">¶</a></dt>
+<dd><p>A boolean indicating whether the command outputs SQL statements; if
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, the output will automatically be wrapped with <code class="docutils literal notranslate"><span class="pre">BEGIN;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">COMMIT;</span></code>. Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.requires_migrations_checks">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">requires_migrations_checks</span></span><a class="headerlink" href="#django.core.management.BaseCommand.requires_migrations_checks" title="Link to this definition">¶</a></dt>
+<dd><p>A boolean; if <code class="docutils literal notranslate"><span class="pre">True</span></code>, the command prints a warning if the set of
+migrations on disk don’t match the migrations in the database. A warning
+doesn’t prevent the command from executing. Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.requires_system_checks">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">requires_system_checks</span></span><a class="headerlink" href="#django.core.management.BaseCommand.requires_system_checks" title="Link to this definition">¶</a></dt>
+<dd><p>A list or tuple of tags, e.g. <code class="docutils literal notranslate"><span class="pre">[Tags.staticfiles,</span> <span class="pre">Tags.models]</span></code>. System
+checks <a class="reference internal" href="../../topics/checks/#registering-labeling-checks"><span class="std std-ref">registered in the chosen tags</span></a>
+will be checked for errors prior to executing the command. The value
+<code class="docutils literal notranslate"><span class="pre">'__all__'</span></code> can be used to specify that all system checks should be
+performed. Default value is <code class="docutils literal notranslate"><span class="pre">'__all__'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.style">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">style</span></span><a class="headerlink" href="#django.core.management.BaseCommand.style" title="Link to this definition">¶</a></dt>
+<dd><p>An instance attribute that helps create colored output when writing to
+<code class="docutils literal notranslate"><span class="pre">stdout</span></code> or <code class="docutils literal notranslate"><span class="pre">stderr</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../../ref/django-admin/#syntax-coloring"><span class="std std-ref">Syntax coloring</span></a> to learn how to modify the color palette and to
+see the available styles (use uppercased versions of the “roles” described
+in that section).</p>
+<p>If you pass the <a class="reference internal" href="../../ref/django-admin/#cmdoption-no-color"><code class="xref std std-option docutils literal notranslate"><span class="pre">--no-color</span></code></a> option when running your command, all
+<code class="docutils literal notranslate"><span class="pre">self.style()</span></code> calls will return the original string uncolored.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.suppressed_base_arguments">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">suppressed_base_arguments</span></span><a class="headerlink" href="#django.core.management.BaseCommand.suppressed_base_arguments" title="Link to this definition">¶</a></dt>
+<dd><p>The default command options to suppress in the help output. This should be
+a set of option names (e.g. <code class="docutils literal notranslate"><span class="pre">'--verbosity'</span></code>). The default values for the
+suppressed options are still passed.</p>
+</dd></dl>
+
+</section>
+<section id="s-methods">
+<span id="methods"></span><h3>Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a> has a few methods that can be overridden but only
+the <a class="reference internal" href="#django.core.management.BaseCommand.handle" title="django.core.management.BaseCommand.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method must be implemented.</p>
+<div class="admonition-implementing-a-constructor-in-a-subclass admonition">
+<p class="admonition-title">Implementing a constructor in a subclass</p>
+<p>If you implement <code class="docutils literal notranslate"><span class="pre">__init__</span></code> in your subclass of <a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a>,
+you must call <a class="reference internal" href="#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a>’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Command</span><span class="p">(</span><span class="n">BaseCommand</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.create_parser">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">create_parser</span></span>(<em class="sig-param"><span class="n"><span class="pre">prog_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subcommand</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L301"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.create_parser" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">CommandParser</span></code> instance, which is an
+<a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a> subclass with a few customizations for
+Django.</p>
+<p>You can customize the instance by overriding this method and calling
+<code class="docutils literal notranslate"><span class="pre">super()</span></code> with <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> of <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentParser</span></code></a>
+parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.add_arguments">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">add_arguments</span></span>(<em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L377"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.add_arguments" title="Link to this definition">¶</a></dt>
+<dd><p>Entry point to add parser arguments to handle command line arguments passed
+to the command. Custom commands should override this method to add both
+positional and optional arguments accepted by the command. Calling
+<code class="docutils literal notranslate"><span class="pre">super()</span></code> is not needed when directly subclassing <code class="docutils literal notranslate"><span class="pre">BaseCommand</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.get_version">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">get_version</span></span>()<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L293"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.get_version" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the Django version, which should be correct for all built-in Django
+commands. User-supplied commands can override this method to return their
+own version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.execute">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">execute</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L438"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.execute" title="Link to this definition">¶</a></dt>
+<dd><p>Tries to execute this command, performing system checks if needed (as
+controlled by the <a class="reference internal" href="#django.core.management.BaseCommand.requires_system_checks" title="django.core.management.BaseCommand.requires_system_checks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">requires_system_checks</span></code></a> attribute). If the command
+raises a <a class="reference internal" href="#django.core.management.CommandError" title="django.core.management.CommandError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CommandError</span></code></a>, it’s intercepted and printed to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>.</p>
+</dd></dl>
+
+<div class="admonition-calling-a-management-command-in-your-code admonition">
+<p class="admonition-title">Calling a management command in your code</p>
+<p><code class="docutils literal notranslate"><span class="pre">execute()</span></code> should not be called directly from your code to execute a
+command. Use <a class="reference internal" href="../../ref/django-admin/#django.core.management.call_command" title="django.core.management.call_command"><code class="xref py py-func docutils literal notranslate"><span class="pre">call_command()</span></code></a> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.handle">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">handle</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L615"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.handle" title="Link to this definition">¶</a></dt>
+<dd><p>The actual logic of the command. Subclasses must implement this method.</p>
+<p>It may return a string which will be printed to <code class="docutils literal notranslate"><span class="pre">stdout</span></code> (wrapped
+by <code class="docutils literal notranslate"><span class="pre">BEGIN;</span></code> and <code class="docutils literal notranslate"><span class="pre">COMMIT;</span></code> if <a class="reference internal" href="#django.core.management.BaseCommand.output_transaction" title="django.core.management.BaseCommand.output_transaction"><code class="xref py py-attr docutils literal notranslate"><span class="pre">output_transaction</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.check">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">check</span></span>(<em class="sig-param"><span class="n"><span class="pre">app_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_num_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_deployment_checks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fail_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">checks.ERROR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L480"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.check" title="Link to this definition">¶</a></dt>
+<dd><p>Uses the system check framework to inspect the entire Django project for
+potential problems. Serious problems are raised as a <a class="reference internal" href="#django.core.management.CommandError" title="django.core.management.CommandError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CommandError</span></code></a>;
+warnings are output to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>; minor notifications are output to
+<code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">app_configs</span></code> and <code class="docutils literal notranslate"><span class="pre">tags</span></code> are both <code class="docutils literal notranslate"><span class="pre">None</span></code>, all system checks are
+performed except deployment and database related checks. <code class="docutils literal notranslate"><span class="pre">tags</span></code> can be a
+list of check tags, like <code class="docutils literal notranslate"><span class="pre">compatibility</span></code> or <code class="docutils literal notranslate"><span class="pre">models</span></code>.</p>
+<p>You can pass <code class="docutils literal notranslate"><span class="pre">include_deployment_checks=True</span></code> to also perform deployment
+checks, and list of database aliases in the <code class="docutils literal notranslate"><span class="pre">databases</span></code> to run database
+related checks against them.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.BaseCommand.get_check_kwargs">
+<span class="sig-prename descclassname"><span class="pre">BaseCommand.</span></span><span class="sig-name descname"><span class="pre">get_check_kwargs</span></span>(<em class="sig-param"><span class="n"><span class="pre">options</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L475"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.BaseCommand.get_check_kwargs" title="Link to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<span class="title">New in Django 5.2.</span> </div>
+<p>Supplies kwargs for the call to <a class="reference internal" href="#django.core.management.BaseCommand.check" title="django.core.management.BaseCommand.check"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check()</span></code></a>, including transforming the
+value of <a class="reference internal" href="#django.core.management.BaseCommand.requires_system_checks" title="django.core.management.BaseCommand.requires_system_checks"><code class="xref py py-attr docutils literal notranslate"><span class="pre">requires_system_checks</span></code></a> to the <code class="docutils literal notranslate"><span class="pre">tag</span></code> kwarg.</p>
+<p>Override this method to change the values supplied to <a class="reference internal" href="#django.core.management.BaseCommand.check" title="django.core.management.BaseCommand.check"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check()</span></code></a>. For
+example, to opt into database related checks you can override
+<code class="docutils literal notranslate"><span class="pre">get_check_kwargs()</span></code> as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_check_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_check_kwargs</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="s2">&quot;databases&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;database&quot;</span><span class="p">]]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="s-basecommand-subclasses">
+<span id="s-ref-basecommand-subclasses"></span><span id="basecommand-subclasses"></span><span id="ref-basecommand-subclasses"></span><h3><code class="docutils literal notranslate"><span class="pre">BaseCommand</span></code> subclasses<a class="headerlink" href="#basecommand-subclasses" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.core.management.AppCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AppCommand</span></span><a class="headerlink" href="#django.core.management.AppCommand" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A management command which takes one or more installed application labels as
+arguments, and does something with each of them.</p>
+<p>Rather than implementing <a class="reference internal" href="#django.core.management.BaseCommand.handle" title="django.core.management.BaseCommand.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>, subclasses must
+implement <a class="reference internal" href="#django.core.management.AppCommand.handle_app_config" title="django.core.management.AppCommand.handle_app_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_app_config()</span></code></a>, which will be called once for
+each application.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.AppCommand.handle_app_config">
+<span class="sig-prename descclassname"><span class="pre">AppCommand.</span></span><span class="sig-name descname"><span class="pre">handle_app_config</span></span>(<em class="sig-param"><span class="n"><span class="pre">app_config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em>)<a class="headerlink" href="#django.core.management.AppCommand.handle_app_config" title="Link to this definition">¶</a></dt>
+<dd><p>Perform the command’s actions for <code class="docutils literal notranslate"><span class="pre">app_config</span></code>, which will be an
+<a class="reference internal" href="../../ref/applications/#django.apps.AppConfig" title="django.apps.AppConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></a> instance corresponding to an application
+label given on the command line.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.core.management.LabelCommand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LabelCommand</span></span><a class="headerlink" href="#django.core.management.LabelCommand" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A management command which takes one or more arbitrary arguments (labels) on
+the command line, and does something with each of them.</p>
+<p>Rather than implementing <a class="reference internal" href="#django.core.management.BaseCommand.handle" title="django.core.management.BaseCommand.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>, subclasses must implement
+<a class="reference internal" href="#django.core.management.LabelCommand.handle_label" title="django.core.management.LabelCommand.handle_label"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_label()</span></code></a>, which will be called once for each label.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.core.management.LabelCommand.label">
+<span class="sig-prename descclassname"><span class="pre">LabelCommand.</span></span><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#django.core.management.LabelCommand.label" title="Link to this definition">¶</a></dt>
+<dd><p>A string describing the arbitrary arguments passed to the command. The
+string is used in the usage text and error messages of the command.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'label'</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.management.LabelCommand.handle_label">
+<span class="sig-prename descclassname"><span class="pre">LabelCommand.</span></span><span class="sig-name descname"><span class="pre">handle_label</span></span>(<em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em>)<a class="headerlink" href="#django.core.management.LabelCommand.handle_label" title="Link to this definition">¶</a></dt>
+<dd><p>Perform the command’s actions for <code class="docutils literal notranslate"><span class="pre">label</span></code>, which will be the string as
+given on the command line.</p>
+</dd></dl>
+
+</section>
+<section id="s-command-exceptions">
+<span id="command-exceptions"></span><h3>Command exceptions<a class="headerlink" href="#command-exceptions" title="Link to this heading">¶</a></h3>
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.core.management.CommandError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CommandError</span></span>(<em class="sig-param"><span class="n"><span class="pre">returncode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/core/management/base.py#L23"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.core.management.CommandError" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Exception class indicating a problem while executing a management command.</p>
+<p>If this exception is raised during the execution of a management command from a
+command line console, it will be caught and turned into a nicely-printed error
+message to the appropriate output stream (i.e., <code class="docutils literal notranslate"><span class="pre">stderr</span></code>); as a result,
+raising this exception (with a sensible description of the error) is the
+preferred way to indicate that something has gone wrong in the execution of a
+command. It accepts the optional <code class="docutils literal notranslate"><span class="pre">returncode</span></code> argument to customize the exit
+status for the management command to exit with, using <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.exit" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exit()</span></code></a>.</p>
+<p>If a management command is called from code through
+<a class="reference internal" href="../../ref/django-admin/#django.core.management.call_command" title="django.core.management.call_command"><code class="xref py py-func docutils literal notranslate"><span class="pre">call_command()</span></code></a>, it’s up to you to catch the
+exception when needed.</p>
+</section>
+</section>
+</section>
+
+    </article>
+  
+
+  
+    <nav class="browse-horizontal" aria-labelledby="browse-horizontal-header">
+      <span id="browse-horizontal-header" class="visuallyhidden">Previous page and next page</span>
+      
+        <div class="left"><a rel="prev" href="../custom-file-storage/"><i class="icon icon-chevron-left"></i> How to write a custom storage class</a></div>
+      
+      
+        <div class="right"><a rel="next" href="../custom-shell/">How to customize the <code class="docutils literal notranslate"><span class="pre">shell</span></code> command <i class="icon icon-chevron-right"></i></a></div>
+      
+    </nav>
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      <img src="https://static.djangoproject.com/img/fundraising-heart.cd6bb84ffd33.svg" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="https://www.djangoproject.com/fundraising/">
+          Juan Moreno donated to the Django Software Foundation to support Django development. Donate today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+<li><a class="reference internal" href="#">How to create custom <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> commands</a><ul>
+<li><a class="reference internal" href="#accepting-optional-arguments">Accepting optional arguments</a></li>
+<li><a class="reference internal" href="#management-commands-and-locales">Management commands and locales</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#overriding-commands">Overriding commands</a></li>
+<li><a class="reference internal" href="#command-objects">Command objects</a><ul>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#basecommand-subclasses"><code class="docutils literal notranslate"><span class="pre">BaseCommand</span></code> subclasses</a></li>
+<li><a class="reference internal" href="#command-exceptions">Command exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      <nav aria-labelledby="browse-header">
+        <h3 id="browse-header">Browse</h3>
+        <ul>
+          
+            
+              <li>Prev: <a rel="prev" href="../custom-file-storage/">How to write a custom storage class</a></li>
+            
+            
+              <li>Next: <a rel="next" href="../custom-shell/">How to customize the <code class="docutils literal notranslate"><span class="pre">shell</span></code> command</a></li>
+            
+            <li><a href="https://docs.djangoproject.com/en/6.0/contents/">Table of contents</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/genindex/">General Index</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/py-modindex/">Python Module Index</a></li>
+            
+          
+        </ul>
+      </nav>
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          <li>
+            <a href="https://docs.djangoproject.com/en/6.0/">Django 6.0 documentation</a>
+            
+              <ul><li><a href="../">How-to guides</a>
+            
+            <ul><li>How to create custom <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> commands</li></ul>
+            </li></ul>
+          </li>
+        </ul>
+      </nav>
+    
+
+    
+      <section aria-labelledby="getting-help-sidebar">
+        <h3 id="getting-help-sidebar">Getting help</h3>
+        <dl class="list-links">
+          <dt><a href="https://docs.djangoproject.com/en/6.0/faq/">FAQ</a></dt>
+          <dd>Try the FAQ — it's got answers to many common questions.</dd>
+
+          <dt><a href="/en/stable/genindex/">Index</a>, <a href="/en/stable/py-modindex/">Module Index</a>, or <a href="/en/stable/contents/">Table of Contents</a></dt>
+          <dd>Handy when looking for specific information.</dd>
+
+          <dt><a href="https://chat.djangoproject.com">Django Discord Server</a></dt>
+          <dd>Join the Django Discord Community.</dd>
+
+          <dt><a href="https://forum.djangoproject.com/">Official Django Forum</a></dt>
+          <dd>Join the community on the Django Forum.</dd>
+
+          <dt><a href="https://code.djangoproject.com/">Ticket tracker</a></dt>
+          <dd>Report bugs with Django or Django documentation in our ticket tracker.</dd>
+        </dl>
+      </section>
+    
+
+    
+      <section aria-labelledby="links-wrapper-header">
+        <h3 id="links-wrapper-header">Download:</h3>
+        <p>
+          Offline (Django 6.0):
+          <a href="https://media.djangoproject.com/docs/django-docs-6.0-en.zip">HTML</a> |
+          <a href="https://media.readthedocs.org/pdf/django/6.0.x/django.pdf">PDF</a> |
+          <a href="https://media.readthedocs.org/epub/django/6.0.x/django.epub">ePub</a>
+          <br>
+          <span class="quiet">
+            Provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+          </span>
+        </p>
+      </section>
+    
+
+    
+  <div class="corporate-members">
+    <h3>Diamond and Platinum Members</h3>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://sentry.io/for/django/" title="Sentry">
+            <img src="https://media.djangoproject.com/cache/7a/f9/7af9c770dc49465739a82c91a0eb3d51.png" alt="Sentry" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>Sentry</strong></li>
+            <li><a href="https://sentry.io/for/django/" title="Sentry">
+              Monitor your Django Code
+Resolve performance bottlenecks and errors using monitoring, replays, logs and Seer an AI agent for debugging.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://jb.gg/ybja10" title="JetBrains">
+            <img src="https://media.djangoproject.com/cache/c0/ea/c0ea128467983e64aab91cd27e7918c0.png" alt="JetBrains" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>JetBrains</strong></li>
+            <li><a href="https://jb.gg/ybja10" title="JetBrains">
+              JetBrains delivers intelligent software solutions that make developers more productive by simplifying their challenging tasks, automating the routine, and helping them adopt the best development practices. PyCharm is the Python IDE for Professional Developers by JetBrains providing a complete set of tools for productive Python, Web and scientific development.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+  </div>
+
+
+  </div>
+
+      
+
+    </div>
+
+     
+     
+
+    
+    
+    
+
+    <!-- SVGs -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+    </svg>
+    <!-- END SVGs -->
+
+    
+      
+
+<footer>
+  <div class="subfooter">
+    <div class="container">
+      <h2 class="visuallyhidden">Django Links</h2>
+      <div class="column-container">
+        <div class="col-learn-more">
+          <h3>Learn More</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/start/overview/">About Django</a></li>
+            
+            <li><a href="https://www.djangoproject.com/start/">Getting Started with Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/teams/">Team Organization</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/">Django Software Foundation</a></li>
+            <li><a href="https://www.djangoproject.com/conduct/">Code of Conduct</a></li>
+            <li><a href="https://www.djangoproject.com/diversity/">Diversity Statement</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/community/">Join a Group</a></li>
+            <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Contribute
+              to Django</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">Submit
+              a Bug</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/security/#reporting-security-issues">Report
+              a Security Issue</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/individual-members/">Individual membership</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            <li><a href="https://docs.djangoproject.com/en/stable/faq/">Getting Help FAQ</a>
+            </li>
+            <li><a href="https://chat.djangoproject.com" target="_blank">Django Discord</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://github.com/django">GitHub</a></li>
+            <li><a href="https://x.com/djangoproject">X</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
+            <li><a href="https://bsky.app/profile/djangoproject.com">Bluesky</a></li>
+            <li><a href="https://www.linkedin.com/company/django-software-foundation">LinkedIn</a></li>
+            <li><a href="https://www.djangoproject.com/rss/weblog/">News RSS</a></li>
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/fundraising/">Sponsor Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+  
+
+
+    
+      
+      <script>
+        function extless(input) {
+          return input.replace(/(.*)\.[^.]+$/, '$1');
+        }
+        var require = {
+          shim: {
+            'jquery': [],
+            'stripe': {
+              exports: 'Stripe'
+            }
+          },
+          paths: {
+            "jquery": extless("https://static.djangoproject.com/js/lib/jquery.min.5790ead7ad3b.js"),
+            "mod/list-collapsing": extless("https://static.djangoproject.com/js/mod/list-collapsing.2d844151b2ec.js"),
+            "mod/stripe-change-card": extless("https://static.djangoproject.com/js/mod/stripe-change-card.eaa0afc324e9.js"),
+            "mod/switch-dark-mode": extless("https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          }
+        };
+      </script>
+      <script data-main="https://static.djangoproject.com/js/main.8677b21133eb.js" src="https://static.djangoproject.com/js/lib/require.177879fbe7dd.js"></script>
+      <script src="https://static.djangoproject.com/js/djangoproject.15c016c8c3a7.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+    <meta name="fediverse:creator" content="@django@fosstodon.org" />
+    
+  
+    
+      
+    
+  
+  <link rel="canonical" href="https://docs.djangoproject.com/en/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="el"
+          href="https://docs.djangoproject.com/el/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="en"
+          href="https://docs.djangoproject.com/en/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="es"
+          href="https://docs.djangoproject.com/es/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="fr"
+          href="https://docs.djangoproject.com/fr/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="id"
+          href="https://docs.djangoproject.com/id/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="it"
+          href="https://docs.djangoproject.com/it/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ja"
+          href="https://docs.djangoproject.com/ja/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ko"
+          href="https://docs.djangoproject.com/ko/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pl"
+          href="https://docs.djangoproject.com/pl/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pt-br"
+          href="https://docs.djangoproject.com/pt-br/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="sv"
+          href="https://docs.djangoproject.com/sv/6.0/topics/composite-primary-key/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="zh-hans"
+          href="https://docs.djangoproject.com/zh-hans/6.0/topics/composite-primary-key/">
+  
+
+  <link rel="search"
+        type="application/opensearchdescription+xml"
+        href="https://docs.djangoproject.com/en/6.0/search/description/"
+        title="Django documentation">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="icon" sizes="192x192" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="shortcut icon" href="https://static.djangoproject.com/img/favicon.6dbf28c0650e.ico">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Composite primary keys | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png"/>
+      <meta property="og:url" content="https://docs.djangoproject.com/en/6.0/topics/composite-primary-key/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Composite primary keys | Django documentation | Django</title>
+
+    <link rel="stylesheet" href="https://static.djangoproject.com/css/output.7f12b704d16e.css" >
+
+    <script src="https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"></script>
+    
+  </head>
+
+  <body id="generic" class="">
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+
+<header id="top">
+  <div class="container container--flex--wrap--mobile">
+    <a class="logo" href="https://www.djangoproject.com/">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div class="header-mobile-only">
+      
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+      <div class="light-dark-mode-toggle">
+        
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+      </div>
+    </div>
+    <button class="menu-button">
+      <i class="icon icon-reorder"></i>
+      <span class="visuallyhidden">Menu</span>
+    </button>
+    <nav aria-labelledby="navigation-header">
+      <span id="navigation-header" class="visuallyhidden">Main navigation</span>
+      <ul>
+        <li>
+          <a href="https://www.djangoproject.com/start/overview/">Overview</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/download/">Download</a>
+        </li>
+        <li class="active">
+          <a href="https://docs.djangoproject.com/">Documentation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/weblog/">News</a>
+        </li>
+        <li>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Issues</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/community/">Community</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/foundation/">Foundation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/fundraising/">&#9829; Donate</a>
+        </li>
+        <li>
+          
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+        </li>
+        <li>
+          
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/6.0/">Documentation</a></p>
+
+      </div>
+    </section>
+
+    <div id="billboard">
+      
+    </div>
+
+    <div class="container sidebar-right">
+      <main id="main-content">
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      <li class="current-link">
+        <a href="https://docs.djangoproject.com/en/6.0/faq/help/">
+          <span>Getting Help</span>
+        </a>
+      </li>
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/el/6.0/topics/composite-primary-key/">el</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/es/6.0/topics/composite-primary-key/">es</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/fr/6.0/topics/composite-primary-key/">fr</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/id/6.0/topics/composite-primary-key/">id</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/it/6.0/topics/composite-primary-key/">it</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ja/6.0/topics/composite-primary-key/">ja</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ko/6.0/topics/composite-primary-key/">ko</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pl/6.0/topics/composite-primary-key/">pl</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pt-br/6.0/topics/composite-primary-key/">pt-br</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/sv/6.0/topics/composite-primary-key/">sv</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/zh-hans/6.0/topics/composite-primary-key/">zh-hans</a>
+          </li>
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/5.2/topics/composite-primary-key/">5.2</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/dev/topics/composite-primary-key/">dev</a>
+          </li>
+        
+      
+      <li class="current"
+          title="This document describes Django 6.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>6.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      <li class="current-link">
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <section id="s-composite-primary-keys">
+<span id="composite-primary-keys"></span><h1>Composite primary keys<a class="headerlink" href="#composite-primary-keys" title="Link to this heading">¶</a></h1>
+<div class="versionadded">
+<span class="title">New in Django 5.2.</span> </div>
+<p>In Django, each model has a primary key. By default, this primary key consists
+of a single field.</p>
+<p>In most cases, a single primary key should suffice. In database design,
+however, defining a primary key consisting of multiple fields is sometimes
+necessary.</p>
+<p>To use a composite primary key, when defining a model set the <code class="docutils literal notranslate"><span class="pre">pk</span></code> attribute
+to be a <a class="reference internal" href="../../ref/models/fields/#django.db.models.CompositePrimaryKey" title="django.db.models.CompositePrimaryKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompositePrimaryKey</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Product</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderLineItem</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CompositePrimaryKey</span><span class="p">(</span><span class="s2">&quot;product_id&quot;</span><span class="p">,</span> <span class="s2">&quot;order_id&quot;</span><span class="p">)</span>
+    <span class="n">product</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Order</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">quantity</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will instruct Django to create a composite primary key
+(<code class="docutils literal notranslate"><span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">(product_id,</span> <span class="pre">order_id)</span></code>) when creating the table.</p>
+<p>A composite primary key is represented by a <code class="docutils literal notranslate"><span class="pre">tuple</span></code>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;apple&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">reference</span><span class="o">=</span><span class="s2">&quot;A755H&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span> <span class="o">=</span> <span class="n">OrderLineItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">quantity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">pk</span>
+<span class="go">(1, &quot;A755H&quot;)</span>
+</pre></div>
+</div>
+<p>You can assign a <code class="docutils literal notranslate"><span class="pre">tuple</span></code> to the <a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.pk" title="django.db.models.Model.pk"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pk</span></code></a> attribute.
+This sets the associated field values:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">item</span> <span class="o">=</span> <span class="n">OrderLineItem</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;B142C&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">pk</span>
+<span class="go">(2, &quot;B142C&quot;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">product_id</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">order_id</span>
+<span class="go">&quot;B142C&quot;</span>
+</pre></div>
+</div>
+<p>A composite primary key can also be filtered by a <code class="docutils literal notranslate"><span class="pre">tuple</span></code>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">OrderLineItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;A755H&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>We’re still working on composite primary key support for
+<a class="reference internal" href="#cpk-and-relations"><span class="std std-ref">relational fields</span></a>, including
+<a class="reference internal" href="../../ref/contrib/contenttypes/#django.contrib.contenttypes.fields.GenericForeignKey" title="django.contrib.contenttypes.fields.GenericForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericForeignKey</span></code></a> fields, and the Django admin. Models with composite
+primary keys cannot be registered in the Django admin at this time. You can
+expect to see this in future releases.</p>
+<section id="s-migrating-to-a-composite-primary-key">
+<span id="migrating-to-a-composite-primary-key"></span><h2>Migrating to a composite primary key<a class="headerlink" href="#migrating-to-a-composite-primary-key" title="Link to this heading">¶</a></h2>
+<p>Django doesn’t support migrating to, or from, a composite primary key after the
+table is created. It also doesn’t support adding or removing fields from the
+composite primary key.</p>
+<p>If you would like to migrate an existing table from a single primary key to a
+composite primary key, follow your database backend’s instructions to do so.</p>
+<p>Once the composite primary key is in place, add the <code class="docutils literal notranslate"><span class="pre">CompositePrimaryKey</span></code>
+field to your model. This allows Django to recognize and handle the composite
+primary key appropriately.</p>
+<p>While migration operations (e.g. <code class="docutils literal notranslate"><span class="pre">AddField</span></code>, <code class="docutils literal notranslate"><span class="pre">AlterField</span></code>) on primary key
+fields are not supported, <code class="docutils literal notranslate"><span class="pre">makemigrations</span></code> will still detect changes.</p>
+<p>In order to avoid errors, it’s recommended to apply such migrations with
+<code class="docutils literal notranslate"><span class="pre">--fake</span></code>.</p>
+<p>Alternatively, <a class="reference internal" href="../../ref/migration-operations/#django.db.migrations.operations.SeparateDatabaseAndState" title="django.db.migrations.operations.SeparateDatabaseAndState"><code class="xref py py-class docutils literal notranslate"><span class="pre">SeparateDatabaseAndState</span></code></a> may be used to execute the
+backend-specific migrations and Django-generated migrations in a single
+operation.</p>
+</section>
+<section id="s-composite-primary-keys-and-relations">
+<span id="s-cpk-and-relations"></span><span id="composite-primary-keys-and-relations"></span><span id="cpk-and-relations"></span><h2>Composite primary keys and relations<a class="headerlink" href="#composite-primary-keys-and-relations" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="../../ref/models/fields/#relationship-fields"><span class="std std-ref">Relationship fields</span></a>, including
+<a class="reference internal" href="../../ref/contrib/contenttypes/#generic-relations"><span class="std std-ref">generic relations</span></a> do not support composite primary
+keys.</p>
+<p>For example, given the <code class="docutils literal notranslate"><span class="pre">OrderLineItem</span></code> model, the following is not
+supported:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">OrderLineItem</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because <code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code> currently cannot reference models with composite primary
+keys.</p>
+<p>To work around this limitation, <code class="docutils literal notranslate"><span class="pre">ForeignObject</span></code> can be used as an
+alternative:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">item_order_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">item_product_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignObject</span><span class="p">(</span>
+        <span class="n">OrderLineItem</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span>
+        <span class="n">from_fields</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;item_order_id&quot;</span><span class="p">,</span> <span class="s2">&quot;item_product_id&quot;</span><span class="p">),</span>
+        <span class="n">to_fields</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;order_id&quot;</span><span class="p">,</span> <span class="s2">&quot;product_id&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ForeignObject</span></code> is much like <code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code>, except that it doesn’t create
+any columns (e.g. <code class="docutils literal notranslate"><span class="pre">item_id</span></code>), foreign key constraints or indexes in the
+database, and the <code class="docutils literal notranslate"><span class="pre">on_delete</span></code> argument is ignored.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">ForeignObject</span></code> is an internal API. This means it is not covered by our
+<a class="reference internal" href="../../internals/release-process/#internal-release-deprecation-policy"><span class="std std-ref">deprecation policy</span></a>.</p>
+</div>
+</section>
+<section id="s-composite-primary-keys-and-database-functions">
+<span id="s-cpk-and-database-functions"></span><span id="composite-primary-keys-and-database-functions"></span><span id="cpk-and-database-functions"></span><h2>Composite primary keys and database functions<a class="headerlink" href="#composite-primary-keys-and-database-functions" title="Link to this heading">¶</a></h2>
+<p>Many database functions only accept a single expression.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">MAX</span><span class="p">(</span><span class="ss">&quot;order_id&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">-- OK</span>
+<span class="k">MAX</span><span class="p">(</span><span class="ss">&quot;product_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;order_id&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">-- ERROR</span>
+</pre></div>
+</div>
+<p>In these cases, providing a composite primary key reference raises a
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, since it is composed of multiple column expressions. An
+exception is made for <code class="docutils literal notranslate"><span class="pre">Count</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Max</span><span class="p">(</span><span class="s2">&quot;order_id&quot;</span><span class="p">)</span>  <span class="c1"># OK</span>
+<span class="n">Max</span><span class="p">(</span><span class="s2">&quot;pk&quot;</span><span class="p">)</span>  <span class="c1"># ValueError</span>
+<span class="n">Count</span><span class="p">(</span><span class="s2">&quot;pk&quot;</span><span class="p">)</span>  <span class="c1"># OK</span>
+</pre></div>
+</div>
+</section>
+<section id="s-composite-primary-keys-in-forms">
+<span id="composite-primary-keys-in-forms"></span><h2>Composite primary keys in forms<a class="headerlink" href="#composite-primary-keys-in-forms" title="Link to this heading">¶</a></h2>
+<p>As a composite primary key is a virtual field, a field which doesn’t represent
+a single database column, this field is excluded from ModelForms.</p>
+<p>For example, take the following form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">OrderLineItemForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">OrderLineItem</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="s2">&quot;__all__&quot;</span>
+</pre></div>
+</div>
+<p>This form does not have a form field <code class="docutils literal notranslate"><span class="pre">pk</span></code> for the composite primary key:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">OrderLineItemForm</span><span class="p">()</span>
+<span class="go">&lt;OrderLineItemForm bound=False, valid=Unknown, fields=(product;order;quantity)&gt;</span>
+</pre></div>
+</div>
+<p>Setting the primary composite field <code class="docutils literal notranslate"><span class="pre">pk</span></code> as a form field raises an unknown
+field <a class="reference internal" href="../../ref/exceptions/#django.core.exceptions.FieldError" title="django.core.exceptions.FieldError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">FieldError</span></code></a>.</p>
+<div class="admonition-primary-key-fields-are-read-only admonition">
+<p class="admonition-title">Primary key fields are read only</p>
+<p>If you change the value of a primary key on an existing object and then
+save it, a new object will be created alongside the old one (see
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.primary_key" title="django.db.models.Field.primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Field.primary_key</span></code></a>).</p>
+<p>This is also true of composite primary keys. Hence, you may want to set
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.editable" title="django.db.models.Field.editable"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Field.editable</span></code></a> to <code class="docutils literal notranslate"><span class="pre">False</span></code> on all primary key fields to exclude
+them from ModelForms.</p>
+</div>
+</section>
+<section id="s-composite-primary-keys-in-model-validation">
+<span id="composite-primary-keys-in-model-validation"></span><h2>Composite primary keys in model validation<a class="headerlink" href="#composite-primary-keys-in-model-validation" title="Link to this heading">¶</a></h2>
+<p>Since <code class="docutils literal notranslate"><span class="pre">pk</span></code> is only a virtual field, including <code class="docutils literal notranslate"><span class="pre">pk</span></code> as a field name in the
+<code class="docutils literal notranslate"><span class="pre">exclude</span></code> argument of <a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.clean_fields" title="django.db.models.Model.clean_fields"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.clean_fields()</span></code></a> has no effect. To exclude
+the composite primary key fields from
+<a class="reference internal" href="../../ref/models/instances/#validating-objects"><span class="std std-ref">model validation</span></a>, specify each field individually.
+<a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.validate_unique" title="django.db.models.Model.validate_unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.validate_unique()</span></code></a> can still be called with <code class="docutils literal notranslate"><span class="pre">exclude={&quot;pk&quot;}</span></code> to
+skip uniqueness checks.</p>
+</section>
+<section id="s-building-composite-primary-key-ready-applications">
+<span id="building-composite-primary-key-ready-applications"></span><h2>Building composite primary key ready applications<a class="headerlink" href="#building-composite-primary-key-ready-applications" title="Link to this heading">¶</a></h2>
+<p>Prior to the introduction of composite primary keys, the single field composing
+the primary key of a model could be retrieved by introspecting the
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.primary_key" title="django.db.models.Field.primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">primary</span> <span class="pre">key</span></code></a> attribute of its
+fields:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pk_field</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">Product</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_fields</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">pk_field</span> <span class="o">=</span> <span class="n">field</span>
+<span class="gp">... </span>        <span class="k">break</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pk_field</span>
+<span class="go">&lt;django.db.models.fields.AutoField: id&gt;</span>
+</pre></div>
+</div>
+<p>Now that a primary key can be composed of multiple fields the
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.primary_key" title="django.db.models.Field.primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">primary</span> <span class="pre">key</span></code></a> attribute can no
+longer be relied upon to identify members of the primary key as it will be set
+to <code class="docutils literal notranslate"><span class="pre">False</span></code> to maintain the invariant that at most one field per model will
+have this attribute set to <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pk_fields</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">OrderLineItem</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_fields</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">pk_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pk_fields</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>In order to build application code that properly handles composite primary
+keys the <a class="reference internal" href="../../ref/models/meta/#django.db.models.options.Options.pk_fields" title="django.db.models.options.Options.pk_fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">_meta.pk_fields</span></code></a>
+attribute should be used instead:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">pk_fields</span>
+<span class="go">[&lt;django.db.models.fields.AutoField: id&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">OrderLineItem</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">pk_fields</span>
+<span class="go">[</span>
+<span class="go">    &lt;django.db.models.fields.ForeignKey: product&gt;,</span>
+<span class="go">    &lt;django.db.models.fields.ForeignKey: order&gt;</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    </article>
+  
+
+  
+    <nav class="browse-horizontal" aria-labelledby="browse-horizontal-header">
+      <span id="browse-horizontal-header" class="visuallyhidden">Previous page and next page</span>
+      
+        <div class="left"><a rel="prev" href="../conditional-view-processing/"><i class="icon icon-chevron-left"></i> Conditional View Processing</a></div>
+      
+      
+        <div class="right"><a rel="next" href="../signing/">Cryptographic signing <i class="icon icon-chevron-right"></i></a></div>
+      
+    </nav>
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      <img src="https://static.djangoproject.com/img/fundraising-heart.cd6bb84ffd33.svg" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="https://www.djangoproject.com/fundraising/">
+          Malik Kekenov donated to the Django Software Foundation to support Django development. Donate today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+<li><a class="reference internal" href="#">Composite primary keys</a><ul>
+<li><a class="reference internal" href="#migrating-to-a-composite-primary-key">Migrating to a composite primary key</a></li>
+<li><a class="reference internal" href="#composite-primary-keys-and-relations">Composite primary keys and relations</a></li>
+<li><a class="reference internal" href="#composite-primary-keys-and-database-functions">Composite primary keys and database functions</a></li>
+<li><a class="reference internal" href="#composite-primary-keys-in-forms">Composite primary keys in forms</a></li>
+<li><a class="reference internal" href="#composite-primary-keys-in-model-validation">Composite primary keys in model validation</a></li>
+<li><a class="reference internal" href="#building-composite-primary-key-ready-applications">Building composite primary key ready applications</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      <nav aria-labelledby="browse-header">
+        <h3 id="browse-header">Browse</h3>
+        <ul>
+          
+            
+              <li>Prev: <a rel="prev" href="../conditional-view-processing/">Conditional View Processing</a></li>
+            
+            
+              <li>Next: <a rel="next" href="../signing/">Cryptographic signing</a></li>
+            
+            <li><a href="https://docs.djangoproject.com/en/6.0/contents/">Table of contents</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/genindex/">General Index</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/py-modindex/">Python Module Index</a></li>
+            
+          
+        </ul>
+      </nav>
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          <li>
+            <a href="https://docs.djangoproject.com/en/6.0/">Django 6.0 documentation</a>
+            
+              <ul><li><a href="../">Using Django</a>
+            
+            <ul><li>Composite primary keys</li></ul>
+            </li></ul>
+          </li>
+        </ul>
+      </nav>
+    
+
+    
+      <section aria-labelledby="getting-help-sidebar">
+        <h3 id="getting-help-sidebar">Getting help</h3>
+        <dl class="list-links">
+          <dt><a href="https://docs.djangoproject.com/en/6.0/faq/">FAQ</a></dt>
+          <dd>Try the FAQ — it's got answers to many common questions.</dd>
+
+          <dt><a href="/en/stable/genindex/">Index</a>, <a href="/en/stable/py-modindex/">Module Index</a>, or <a href="/en/stable/contents/">Table of Contents</a></dt>
+          <dd>Handy when looking for specific information.</dd>
+
+          <dt><a href="https://chat.djangoproject.com">Django Discord Server</a></dt>
+          <dd>Join the Django Discord Community.</dd>
+
+          <dt><a href="https://forum.djangoproject.com/">Official Django Forum</a></dt>
+          <dd>Join the community on the Django Forum.</dd>
+
+          <dt><a href="https://code.djangoproject.com/">Ticket tracker</a></dt>
+          <dd>Report bugs with Django or Django documentation in our ticket tracker.</dd>
+        </dl>
+      </section>
+    
+
+    
+      <section aria-labelledby="links-wrapper-header">
+        <h3 id="links-wrapper-header">Download:</h3>
+        <p>
+          Offline (Django 6.0):
+          <a href="https://media.djangoproject.com/docs/django-docs-6.0-en.zip">HTML</a> |
+          <a href="https://media.readthedocs.org/pdf/django/6.0.x/django.pdf">PDF</a> |
+          <a href="https://media.readthedocs.org/epub/django/6.0.x/django.epub">ePub</a>
+          <br>
+          <span class="quiet">
+            Provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+          </span>
+        </p>
+      </section>
+    
+
+    
+  <div class="corporate-members">
+    <h3>Diamond and Platinum Members</h3>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://sentry.io/for/django/" title="Sentry">
+            <img src="https://media.djangoproject.com/cache/7a/f9/7af9c770dc49465739a82c91a0eb3d51.png" alt="Sentry" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>Sentry</strong></li>
+            <li><a href="https://sentry.io/for/django/" title="Sentry">
+              Monitor your Django Code
+Resolve performance bottlenecks and errors using monitoring, replays, logs and Seer an AI agent for debugging.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://jb.gg/ybja10" title="JetBrains">
+            <img src="https://media.djangoproject.com/cache/c0/ea/c0ea128467983e64aab91cd27e7918c0.png" alt="JetBrains" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>JetBrains</strong></li>
+            <li><a href="https://jb.gg/ybja10" title="JetBrains">
+              JetBrains delivers intelligent software solutions that make developers more productive by simplifying their challenging tasks, automating the routine, and helping them adopt the best development practices. PyCharm is the Python IDE for Professional Developers by JetBrains providing a complete set of tools for productive Python, Web and scientific development.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+  </div>
+
+
+  </div>
+
+      
+
+    </div>
+
+     
+     
+
+    
+    
+    
+
+    <!-- SVGs -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+    </svg>
+    <!-- END SVGs -->
+
+    
+      
+
+<footer>
+  <div class="subfooter">
+    <div class="container">
+      <h2 class="visuallyhidden">Django Links</h2>
+      <div class="column-container">
+        <div class="col-learn-more">
+          <h3>Learn More</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/start/overview/">About Django</a></li>
+            
+            <li><a href="https://www.djangoproject.com/start/">Getting Started with Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/teams/">Team Organization</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/">Django Software Foundation</a></li>
+            <li><a href="https://www.djangoproject.com/conduct/">Code of Conduct</a></li>
+            <li><a href="https://www.djangoproject.com/diversity/">Diversity Statement</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/community/">Join a Group</a></li>
+            <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Contribute
+              to Django</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">Submit
+              a Bug</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/security/#reporting-security-issues">Report
+              a Security Issue</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/individual-members/">Individual membership</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            <li><a href="https://docs.djangoproject.com/en/stable/faq/">Getting Help FAQ</a>
+            </li>
+            <li><a href="https://chat.djangoproject.com" target="_blank">Django Discord</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://github.com/django">GitHub</a></li>
+            <li><a href="https://x.com/djangoproject">X</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
+            <li><a href="https://bsky.app/profile/djangoproject.com">Bluesky</a></li>
+            <li><a href="https://www.linkedin.com/company/django-software-foundation">LinkedIn</a></li>
+            <li><a href="https://www.djangoproject.com/rss/weblog/">News RSS</a></li>
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/fundraising/">Sponsor Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+  
+
+
+    
+      
+      <script>
+        function extless(input) {
+          return input.replace(/(.*)\.[^.]+$/, '$1');
+        }
+        var require = {
+          shim: {
+            'jquery': [],
+            'stripe': {
+              exports: 'Stripe'
+            }
+          },
+          paths: {
+            "jquery": extless("https://static.djangoproject.com/js/lib/jquery.min.5790ead7ad3b.js"),
+            "mod/list-collapsing": extless("https://static.djangoproject.com/js/mod/list-collapsing.2d844151b2ec.js"),
+            "mod/stripe-change-card": extless("https://static.djangoproject.com/js/mod/stripe-change-card.eaa0afc324e9.js"),
+            "mod/switch-dark-mode": extless("https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          }
+        };
+      </script>
+      <script data-main="https://static.djangoproject.com/js/main.8677b21133eb.js" src="https://static.djangoproject.com/js/lib/require.177879fbe7dd.js"></script>
+      <script src="https://static.djangoproject.com/js/djangoproject.15c016c8c3a7.js"></script>
+    
+  </body>
+</html>

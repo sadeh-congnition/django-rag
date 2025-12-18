@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+    <meta name="fediverse:creator" content="@django@fosstodon.org" />
+    
+  
+    
+      
+    
+  
+  <link rel="canonical" href="https://docs.djangoproject.com/en/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="el"
+          href="https://docs.djangoproject.com/el/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="en"
+          href="https://docs.djangoproject.com/en/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="es"
+          href="https://docs.djangoproject.com/es/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="fr"
+          href="https://docs.djangoproject.com/fr/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="id"
+          href="https://docs.djangoproject.com/id/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="it"
+          href="https://docs.djangoproject.com/it/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ja"
+          href="https://docs.djangoproject.com/ja/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="ko"
+          href="https://docs.djangoproject.com/ko/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pl"
+          href="https://docs.djangoproject.com/pl/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="pt-br"
+          href="https://docs.djangoproject.com/pt-br/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="sv"
+          href="https://docs.djangoproject.com/sv/6.0/ref/tasks/">
+  
+    
+      
+    
+    <link rel="alternate"
+          hreflang="zh-hans"
+          href="https://docs.djangoproject.com/zh-hans/6.0/ref/tasks/">
+  
+
+  <link rel="search"
+        type="application/opensearchdescription+xml"
+        href="https://docs.djangoproject.com/en/6.0/search/description/"
+        title="Django documentation">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="icon" sizes="192x192" href="https://static.djangoproject.com/img/icon-touch.e4872c4da341.png">
+    <link rel="shortcut icon" href="https://static.djangoproject.com/img/favicon.6dbf28c0650e.ico">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Tasks | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png"/>
+      <meta property="og:url" content="https://docs.djangoproject.com/en/6.0/ref/tasks/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Tasks | Django documentation | Django</title>
+
+    <link rel="stylesheet" href="https://static.djangoproject.com/css/output.7f12b704d16e.css" >
+
+    <script src="https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"></script>
+    
+  </head>
+
+  <body id="generic" class="">
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+
+<header id="top">
+  <div class="container container--flex--wrap--mobile">
+    <a class="logo" href="https://www.djangoproject.com/">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div class="header-mobile-only">
+      
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+      <div class="light-dark-mode-toggle">
+        
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+      </div>
+    </div>
+    <button class="menu-button">
+      <i class="icon icon-reorder"></i>
+      <span class="visuallyhidden">Menu</span>
+    </button>
+    <nav aria-labelledby="navigation-header">
+      <span id="navigation-header" class="visuallyhidden">Main navigation</span>
+      <ul>
+        <li>
+          <a href="https://www.djangoproject.com/start/overview/">Overview</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/download/">Download</a>
+        </li>
+        <li class="active">
+          <a href="https://docs.djangoproject.com/">Documentation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/weblog/">News</a>
+        </li>
+        <li>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Issues</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/community/">Community</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/foundation/">Foundation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/fundraising/">&#9829; Donate</a>
+        </li>
+        <li>
+          
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/6.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search</label>
+    <input type="search" name="q" placeholder="Search" id="id_q">
+    <input type="hidden" name="category" value="">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+        </li>
+        <li>
+          
+
+<button class="theme-toggle">
+  <div class="visually-hidden theme-label-when-auto">Toggle theme (current theme: auto)</div>
+  <div class="visually-hidden theme-label-when-light">Toggle theme (current theme: light)</div>
+  <div class="visually-hidden theme-label-when-dark">Toggle theme (current theme: dark)</div>
+
+  <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/6.0/">Documentation</a></p>
+
+      </div>
+    </section>
+
+    <div id="billboard">
+      
+    </div>
+
+    <div class="container sidebar-right">
+      <main id="main-content">
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      <li class="current-link">
+        <a href="https://docs.djangoproject.com/en/6.0/faq/help/">
+          <span>Getting Help</span>
+        </a>
+      </li>
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/el/6.0/ref/tasks/">el</a>
+          </li>
+        
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/es/6.0/ref/tasks/">es</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/fr/6.0/ref/tasks/">fr</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/id/6.0/ref/tasks/">id</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/it/6.0/ref/tasks/">it</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ja/6.0/ref/tasks/">ja</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/ko/6.0/ref/tasks/">ko</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pl/6.0/ref/tasks/">pl</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/pt-br/6.0/ref/tasks/">pt-br</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/sv/6.0/ref/tasks/">sv</a>
+          </li>
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/zh-hans/6.0/ref/tasks/">zh-hans</a>
+          </li>
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+      
+        
+          <li class="other">
+            
+              
+            
+            <a href="https://docs.djangoproject.com/en/dev/ref/tasks/">dev</a>
+          </li>
+        
+      
+      <li class="current"
+          title="This document describes Django 6.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>6.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      <li class="current-link">
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <section id="s-tasks">
+<span id="tasks"></span><h1>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h1>
+<div class="versionadded">
+<span class="title">New in Django 6.0.</span> </div>
+<p id="module-django.tasks">The Task framework provides the contract and plumbing for background work, not
+the engine that runs it. The Tasks API defines how work is described, queued,
+and tracked, but leaves actual execution to external infrastructure.</p>
+<section id="s-task-definition">
+<span id="task-definition"></span><h2>Task definition<a class="headerlink" href="#task-definition" title="Link to this heading">¶</a></h2>
+<section id="s-the-task-decorator">
+<span id="the-task-decorator"></span><h3>The <code class="docutils literal notranslate"><span class="pre">task</span></code> decorator<a class="headerlink" href="#the-task-decorator" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="django.tasks.task">
+<span class="sig-name descname"><span class="pre">task</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">takes_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L133"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.task" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">&#64;task</span></code> decorator defines a <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> instance. This has the
+following optional arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">priority</span></code>: Sets the <a class="reference internal" href="#django.tasks.Task.priority" title="django.tasks.Task.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a> of the <code class="docutils literal notranslate"><span class="pre">Task</span></code>. Defaults
+to 0.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">queue_name</span></code>: Sets the <a class="reference internal" href="#django.tasks.Task.queue_name" title="django.tasks.Task.queue_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue_name</span></code></a> of the <code class="docutils literal notranslate"><span class="pre">Task</span></code>.
+Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backend</span></code>: Sets the <a class="reference internal" href="#django.tasks.Task.backend" title="django.tasks.Task.backend"><code class="xref py py-attr docutils literal notranslate"><span class="pre">backend</span></code></a> of the <code class="docutils literal notranslate"><span class="pre">Task</span></code>. Defaults to
+<code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">takes_context</span></code>: Controls whether the <code class="docutils literal notranslate"><span class="pre">Task</span></code> function accepts a
+<a class="reference internal" href="#django.tasks.TaskContext" title="django.tasks.TaskContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskContext</span></code></a>. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. See <a class="reference internal" href="../../topics/tasks/#task-context"><span class="std std-ref">Task context</span></a> for details.</p></li>
+</ul>
+<p>If the defined <code class="docutils literal notranslate"><span class="pre">Task</span></code> is not valid according to the backend,
+<a class="reference internal" href="#django.tasks.exceptions.InvalidTask" title="django.tasks.exceptions.InvalidTask"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidTask</span></code></a> is raised.</p>
+<p>See <a class="reference internal" href="../../topics/tasks/#defining-tasks"><span class="std std-ref">defining tasks</span></a> for usage examples.</p>
+</dd></dl>
+
+</section>
+<section id="s-task">
+<span id="task"></span><h3><code class="docutils literal notranslate"><span class="pre">Task</span></code><a class="headerlink" href="#task" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.Task">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Task</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L44"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.Task" title="Link to this definition">¶</a></dt>
+<dd><p>Represents a Task to be run in the background. Tasks should be defined
+using the <a class="reference internal" href="#django.tasks.task" title="django.tasks.task"><code class="xref py py-func docutils literal notranslate"><span class="pre">task()</span></code></a> decorator.</p>
+<p>Attributes of <code class="docutils literal notranslate"><span class="pre">Task</span></code> cannot be modified. See <a class="reference internal" href="../../topics/tasks/#modifying-tasks"><span class="std std-ref">modifying Tasks</span></a> for details.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.Task.priority">
+<span class="sig-name descname"><span class="pre">priority</span></span><a class="headerlink" href="#django.tasks.Task.priority" title="Link to this definition">¶</a></dt>
+<dd><p>The priority of the <code class="docutils literal notranslate"><span class="pre">Task</span></code>. Priorities must be between -100 and 100,
+where larger numbers are higher priority, and will be run sooner.</p>
+<p>The backend must have <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_priority" title="django.tasks.backends.base.BaseTaskBackend.supports_priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_priority</span></code></a> set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to use
+this feature.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.Task.backend">
+<span class="sig-name descname"><span class="pre">backend</span></span><a class="headerlink" href="#django.tasks.Task.backend" title="Link to this definition">¶</a></dt>
+<dd><p>The alias of the backend the <code class="docutils literal notranslate"><span class="pre">Task</span></code> should be enqueued to. This must
+match a backend defined in <a class="reference internal" href="../settings/#std-setting-TASKS-BACKEND"><code class="xref std std-setting docutils literal notranslate"><span class="pre">BACKEND</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.Task.queue_name">
+<span class="sig-name descname"><span class="pre">queue_name</span></span><a class="headerlink" href="#django.tasks.Task.queue_name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the queue the <code class="docutils literal notranslate"><span class="pre">Task</span></code> will be enqueued on to. Defaults to
+<code class="docutils literal notranslate"><span class="pre">&quot;default&quot;</span></code>. This must match a queue defined in
+<a class="reference internal" href="../settings/#std-setting-TASKS-QUEUES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">QUEUES</span></code></a>, unless
+<a class="reference internal" href="../settings/#std-setting-TASKS-QUEUES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">QUEUES</span></code></a> is set to <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.Task.run_after">
+<span class="sig-name descname"><span class="pre">run_after</span></span><a class="headerlink" href="#django.tasks.Task.run_after" title="Link to this definition">¶</a></dt>
+<dd><p>The earliest time the <code class="docutils literal notranslate"><span class="pre">Task</span></code> will be executed. This can be a
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">timedelta</span></code></a>, which is used relative to the
+current time, a timezone-aware <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a>,
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not constrained. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>The backend must have <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_defer" title="django.tasks.backends.base.BaseTaskBackend.supports_defer"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_defer</span></code></a> set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to use
+this feature. Otherwise,
+<a class="reference internal" href="#django.tasks.exceptions.InvalidTask" title="django.tasks.exceptions.InvalidTask"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidTask</span></code></a> is raised.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.Task.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L58"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.Task.name" title="Link to this definition">¶</a></dt>
+<dd><p>The name of the function decorated with <a class="reference internal" href="#django.tasks.task" title="django.tasks.task"><code class="xref py py-func docutils literal notranslate"><span class="pre">task()</span></code></a>. This name is not
+necessarily unique.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.Task.using">
+<span class="sig-name descname"><span class="pre">using</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L61"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.Task.using" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a new <code class="docutils literal notranslate"><span class="pre">Task</span></code> with modified defaults. The existing <code class="docutils literal notranslate"><span class="pre">Task</span></code> is
+left unchanged.</p>
+<p><code class="docutils literal notranslate"><span class="pre">using</span></code> allows modifying the following attributes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#django.tasks.Task.priority" title="django.tasks.Task.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.tasks.Task.backend" title="django.tasks.Task.backend"><code class="xref py py-attr docutils literal notranslate"><span class="pre">backend</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.tasks.Task.queue_name" title="django.tasks.Task.queue_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue_name</span></code></a></p></li>
+<li><p><a class="reference internal" href="#django.tasks.Task.run_after" title="django.tasks.Task.run_after"><code class="xref py py-attr docutils literal notranslate"><span class="pre">run_after</span></code></a></p></li>
+</ul>
+<p>See <a class="reference internal" href="../../topics/tasks/#modifying-tasks"><span class="std std-ref">modifying Tasks</span></a> for usage examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.Task.enqueue">
+<span class="sig-name descname"><span class="pre">enqueue</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L82"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.Task.enqueue" title="Link to this definition">¶</a></dt>
+<dd><p>Enqueues the <code class="docutils literal notranslate"><span class="pre">Task</span></code> to the <code class="docutils literal notranslate"><span class="pre">Task</span></code> backend for later execution.</p>
+<p>Arguments are passed to the <code class="docutils literal notranslate"><span class="pre">Task</span></code>’s function after a round-trip
+through a <a class="reference external" href="https://docs.python.org/3/library/json.html#json.dumps" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">json.dumps()</span></code></a>/<a class="reference external" href="https://docs.python.org/3/library/json.html#json.loads" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">json.loads()</span></code></a> cycle. Hence, all
+arguments must be JSON-serializable and preserve their type after the
+round-trip.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">Task</span></code> is not valid according to the backend,
+<a class="reference internal" href="#django.tasks.exceptions.InvalidTask" title="django.tasks.exceptions.InvalidTask"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidTask</span></code></a> is raised.</p>
+<p>See <a class="reference internal" href="../../topics/tasks/#enqueueing-tasks"><span class="std std-ref">enqueueing Tasks</span></a> for usage examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.Task.aenqueue">
+<span class="sig-name descname"><span class="pre">aenqueue</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.tasks.Task.aenqueue" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> variant of <a class="reference internal" href="#django.tasks.Task.enqueue" title="django.tasks.Task.enqueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enqueue</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.Task.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span>(<em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L90"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.Task.get_result" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves a result by its id.</p>
+<p>If the result does not exist, <a class="reference internal" href="#django.tasks.exceptions.TaskResultDoesNotExist" title="django.tasks.exceptions.TaskResultDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TaskResultDoesNotExist</span></code></a> is raised. If the
+result is not the same type as the current Task,
+<a class="reference internal" href="#django.tasks.exceptions.TaskResultMismatch" title="django.tasks.exceptions.TaskResultMismatch"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TaskResultMismatch</span></code></a>
+is raised. If the backend does not support <code class="docutils literal notranslate"><span class="pre">get_result()</span></code>,
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.14)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.Task.aget_result">
+<span class="sig-name descname"><span class="pre">aget_result</span></span>(<em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.tasks.Task.aget_result" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> variant of <a class="reference internal" href="#django.tasks.Task.get_result" title="django.tasks.Task.get_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_result</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="s-task-context">
+<span id="task-context"></span><h2>Task context<a class="headerlink" href="#task-context" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.TaskContext">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskContext</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L242"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskContext" title="Link to this definition">¶</a></dt>
+<dd><p>Contains context for the running <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a>. Context only passed to a
+<code class="docutils literal notranslate"><span class="pre">Task</span></code> if it was defined with <code class="docutils literal notranslate"><span class="pre">takes_context=True</span></code>.</p>
+<p>Attributes of <code class="docutils literal notranslate"><span class="pre">TaskContext</span></code> cannot be modified.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskContext.task_result">
+<span class="sig-name descname"><span class="pre">task_result</span></span><a class="headerlink" href="#django.tasks.TaskContext.task_result" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.TaskResult" title="django.tasks.TaskResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskResult</span></code></a> currently being run.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskContext.attempt">
+<span class="sig-name descname"><span class="pre">attempt</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L246"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskContext.attempt" title="Link to this definition">¶</a></dt>
+<dd><p>The number of the current execution attempts for this Task, starting at
+1.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="s-task-results">
+<span id="task-results"></span><h2>Task results<a class="headerlink" href="#task-results" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.TaskResultStatus">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskResultStatus</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L32"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResultStatus" title="Link to this definition">¶</a></dt>
+<dd><p>An Enum representing the status of a <a class="reference internal" href="#django.tasks.TaskResult" title="django.tasks.TaskResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskResult</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResultStatus.READY">
+<span class="sig-name descname"><span class="pre">READY</span></span><a class="headerlink" href="#django.tasks.TaskResultStatus.READY" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> has just been enqueued, or is ready to be executed
+again.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResultStatus.RUNNING">
+<span class="sig-name descname"><span class="pre">RUNNING</span></span><a class="headerlink" href="#django.tasks.TaskResultStatus.RUNNING" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> is currently being executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResultStatus.FAILED">
+<span class="sig-name descname"><span class="pre">FAILED</span></span><a class="headerlink" href="#django.tasks.TaskResultStatus.FAILED" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> raised an exception during execution, or was unable
+to start.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResultStatus.SUCCESSFUL">
+<span class="sig-name descname"><span class="pre">SUCCESSFUL</span></span><a class="headerlink" href="#django.tasks.TaskResultStatus.SUCCESSFUL" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> has finished executing successfully.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.TaskResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskResult</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L178"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResult" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">TaskResult</span></code> stores the information about a specific execution of a
+<a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a>.</p>
+<p>Attributes of <code class="docutils literal notranslate"><span class="pre">TaskResult</span></code> cannot be modified.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.task">
+<span class="sig-name descname"><span class="pre">task</span></span><a class="headerlink" href="#django.tasks.TaskResult.task" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> the result was enqueued for.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#django.tasks.TaskResult.id" title="Link to this definition">¶</a></dt>
+<dd><p>A unique identifier for the result, which can be passed to
+<a class="reference internal" href="#django.tasks.Task.get_result" title="django.tasks.Task.get_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Task.get_result()</span></code></a>.</p>
+<p>The format of the id will depend on the backend being used. Task result
+ids are always strings less than 64 characters.</p>
+<p>See <a class="reference internal" href="../../topics/tasks/#task-results"><span class="std std-ref">Task results</span></a> for more details.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#django.tasks.TaskResult.status" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.tasks.TaskResultStatus" title="django.tasks.TaskResultStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">status</span></code></a> of the result.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.enqueued_at">
+<span class="sig-name descname"><span class="pre">enqueued_at</span></span><a class="headerlink" href="#django.tasks.TaskResult.enqueued_at" title="Link to this definition">¶</a></dt>
+<dd><p>The time when the <code class="docutils literal notranslate"><span class="pre">Task</span></code> was enqueued.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.started_at">
+<span class="sig-name descname"><span class="pre">started_at</span></span><a class="headerlink" href="#django.tasks.TaskResult.started_at" title="Link to this definition">¶</a></dt>
+<dd><p>The time when the <code class="docutils literal notranslate"><span class="pre">Task</span></code> began execution, on its first attempt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.last_attempted_at">
+<span class="sig-name descname"><span class="pre">last_attempted_at</span></span><a class="headerlink" href="#django.tasks.TaskResult.last_attempted_at" title="Link to this definition">¶</a></dt>
+<dd><p>The time when the most recent <code class="docutils literal notranslate"><span class="pre">Task</span></code> run began execution.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.finished_at">
+<span class="sig-name descname"><span class="pre">finished_at</span></span><a class="headerlink" href="#django.tasks.TaskResult.finished_at" title="Link to this definition">¶</a></dt>
+<dd><p>The time when the <code class="docutils literal notranslate"><span class="pre">Task</span></code> finished execution, whether it failed or
+succeeded.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.backend">
+<span class="sig-name descname"><span class="pre">backend</span></span><a class="headerlink" href="#django.tasks.TaskResult.backend" title="Link to this definition">¶</a></dt>
+<dd><p>The backend the result is from.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.errors">
+<span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#django.tasks.TaskResult.errors" title="Link to this definition">¶</a></dt>
+<dd><p>A list of <a class="reference internal" href="#django.tasks.TaskError" title="django.tasks.TaskError"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskError</span></code></a> instances for the errors raised as part of
+each execution of the Task.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.return_value">
+<span class="sig-name descname"><span class="pre">return_value</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L203"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResult.return_value" title="Link to this definition">¶</a></dt>
+<dd><p>The return value from the <code class="docutils literal notranslate"><span class="pre">Task</span></code> function.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">Task</span></code> did not finish successfully, <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.14)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is
+raised.</p>
+<p>See <a class="reference internal" href="../../topics/tasks/#task-return-values"><span class="std std-ref">return values</span></a> for usage examples.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span>()<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L225"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResult.refresh" title="Link to this definition">¶</a></dt>
+<dd><p>Refresh the result’s attributes from the queue store.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.arefresh">
+<span class="sig-name descname"><span class="pre">arefresh</span></span>()<a class="headerlink" href="#django.tasks.TaskResult.arefresh" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> variant of <a class="reference internal" href="#django.tasks.TaskResult.refresh" title="django.tasks.TaskResult.refresh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TaskResult.refresh()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.is_finished">
+<span class="sig-name descname"><span class="pre">is_finished</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L218"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResult.is_finished" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the <code class="docutils literal notranslate"><span class="pre">Task</span></code> has finished (successfully or not).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.attempts">
+<span class="sig-name descname"><span class="pre">attempts</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/base.py#L222"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.TaskResult.attempts" title="Link to this definition">¶</a></dt>
+<dd><p>The number of times the Task has been run.</p>
+<p>If the task is currently running, it does not count as an attempt.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskResult.worker_ids">
+<span class="sig-name descname"><span class="pre">worker_ids</span></span><a class="headerlink" href="#django.tasks.TaskResult.worker_ids" title="Link to this definition">¶</a></dt>
+<dd><p>The ids of the workers which have executed the Task.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="s-task-errors">
+<span id="task-errors"></span><h3>Task errors<a class="headerlink" href="#task-errors" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.TaskError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskError</span></span><a class="headerlink" href="#django.tasks.TaskError" title="Link to this definition">¶</a></dt>
+<dd><p>Contains information about the error raised during the execution of a
+<code class="docutils literal notranslate"><span class="pre">Task</span></code>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskError.traceback">
+<span class="sig-name descname"><span class="pre">traceback</span></span><a class="headerlink" href="#django.tasks.TaskError.traceback" title="Link to this definition">¶</a></dt>
+<dd><p>The traceback (as a string) from the raised exception when the <code class="docutils literal notranslate"><span class="pre">Task</span></code>
+failed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.TaskError.exception_class">
+<span class="sig-name descname"><span class="pre">exception_class</span></span><a class="headerlink" href="#django.tasks.TaskError.exception_class" title="Link to this definition">¶</a></dt>
+<dd><p>The exception class raised when executing the <code class="docutils literal notranslate"><span class="pre">Task</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="s-backends">
+<span id="backends"></span><h2>Backends<a class="headerlink" href="#backends" title="Link to this heading">¶</a></h2>
+<p>Backends handle how Tasks are stored and executed. All backends share a common
+interface defined by <code class="docutils literal notranslate"><span class="pre">BaseTaskBackend</span></code>, which specifies the core methods for
+enqueueing Tasks and retrieving results.</p>
+<section id="s-module-django.tasks.backends.base">
+<span id="s-base-backend"></span><span id="module-django.tasks.backends.base"></span><span id="base-backend"></span><h3>Base backend<a class="headerlink" href="#module-django.tasks.backends.base" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseTaskBackend</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/base.py#L19"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend" title="Link to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">BaseTaskBackend</span></code> is the parent class for all Task backends.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.options">
+<span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.options" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of extra parameters for the Task backend. These are
+provided using the <a class="reference internal" href="../settings/#std-setting-TASKS-OPTIONS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">OPTIONS</span></code></a> setting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.enqueue">
+<span class="sig-name descname"><span class="pre">enqueue</span></span>(<em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/base.py#L86"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.enqueue" title="Link to this definition">¶</a></dt>
+<dd><p>Task backends which subclass <code class="docutils literal notranslate"><span class="pre">BaseTaskBackend</span></code> should implement this
+method as a minimum.</p>
+<p>When implemented, <code class="docutils literal notranslate"><span class="pre">enqueue()</span></code> enqueues the <code class="docutils literal notranslate"><span class="pre">task</span></code>, a <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a>
+instance, for later execution. <code class="docutils literal notranslate"><span class="pre">args</span></code> are the positional arguments
+and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> are the keyword arguments to be passed to the <code class="docutils literal notranslate"><span class="pre">task</span></code>.
+Returns a <a class="reference internal" href="#django.tasks.TaskResult" title="django.tasks.TaskResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskResult</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.aenqueue">
+<span class="sig-name descname"><span class="pre">aenqueue</span></span>(<em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.aenqueue" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> variant of <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.enqueue" title="django.tasks.backends.base.BaseTaskBackend.enqueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseTaskBackend.enqueue()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span>(<em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/base.py#L95"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.get_result" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve a result by its id. If the result does not exist,
+<a class="reference internal" href="#django.tasks.exceptions.TaskResultDoesNotExist" title="django.tasks.exceptions.TaskResultDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TaskResultDoesNotExist</span></code></a> is raised.</p>
+<p>If the backend does not support <code class="docutils literal notranslate"><span class="pre">get_result()</span></code>,
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.14)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a> is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.aget_result">
+<span class="sig-name descname"><span class="pre">aget_result</span></span>(<em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em>)<a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.aget_result" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">async</span></code> variant of <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.get_result" title="django.tasks.backends.base.BaseTaskBackend.get_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseTaskBackend.get_result()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.validate_task">
+<span class="sig-name descname"><span class="pre">validate_task</span></span>(<em class="sig-param"><span class="n"><span class="pre">task</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/base.py#L42"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.validate_task" title="Link to this definition">¶</a></dt>
+<dd><p>Validates whether the provided <code class="docutils literal notranslate"><span class="pre">Task</span></code> is able to be enqueued using
+the backend. If the Task is not valid,
+<a class="reference internal" href="#django.tasks.exceptions.InvalidTask" title="django.tasks.exceptions.InvalidTask"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InvalidTask</span></code></a>
+is raised.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="s-feature-flags">
+<span id="feature-flags"></span><h4>Feature flags<a class="headerlink" href="#feature-flags" title="Link to this heading">¶</a></h4>
+<p>Some backends may not support all features Django provides. It’s possible to
+identify the supported functionality of a backend, and potentially change
+behavior accordingly.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.supports_defer">
+<span class="sig-prename descclassname"><span class="pre">BaseTaskBackend.</span></span><span class="sig-name descname"><span class="pre">supports_defer</span></span><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.supports_defer" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the backend supports enqueueing Tasks to be executed after a
+specific time using the <a class="reference internal" href="#django.tasks.Task.run_after" title="django.tasks.Task.run_after"><code class="xref py py-attr docutils literal notranslate"><span class="pre">run_after</span></code></a> attribute.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.supports_async_task">
+<span class="sig-prename descclassname"><span class="pre">BaseTaskBackend.</span></span><span class="sig-name descname"><span class="pre">supports_async_task</span></span><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.supports_async_task" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the backend supports enqueueing async functions (coroutines).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.supports_get_result">
+<span class="sig-prename descclassname"><span class="pre">BaseTaskBackend.</span></span><span class="sig-name descname"><span class="pre">supports_get_result</span></span><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.supports_get_result" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the backend supports retrieving <code class="docutils literal notranslate"><span class="pre">Task</span></code> results from another
+thread after they have been enqueued.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.base.BaseTaskBackend.supports_priority">
+<span class="sig-prename descclassname"><span class="pre">BaseTaskBackend.</span></span><span class="sig-name descname"><span class="pre">supports_priority</span></span><a class="headerlink" href="#django.tasks.backends.base.BaseTaskBackend.supports_priority" title="Link to this definition">¶</a></dt>
+<dd><p>Whether the backend supports executing Tasks as ordered by their
+<a class="reference internal" href="#django.tasks.Task.priority" title="django.tasks.Task.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a>.</p>
+</dd></dl>
+
+<p>The below table notes which of the <a class="reference internal" href="#task-available-backends"><span class="std std-ref">built-in backends</span></a> support which features:</p>
+<table class="docutils">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p><a class="reference internal" href="#django.tasks.backends.dummy.DummyBackend" title="django.tasks.backends.dummy.DummyBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">DummyBackend</span></code></a></p></th>
+<th class="head"><p><a class="reference internal" href="#django.tasks.backends.immediate.ImmediateBackend" title="django.tasks.backends.immediate.ImmediateBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImmediateBackend</span></code></a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_defer" title="django.tasks.backends.base.BaseTaskBackend.supports_defer"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_defer</span></code></a></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_async_task" title="django.tasks.backends.base.BaseTaskBackend.supports_async_task"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_async_task</span></code></a></p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_get_result" title="django.tasks.backends.base.BaseTaskBackend.supports_get_result"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_get_result</span></code></a></p></td>
+<td><p>No</p></td>
+<td><p>No <a class="footnote-reference brackets" href="#fnimmediateresult" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.supports_priority" title="django.tasks.backends.base.BaseTaskBackend.supports_priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">supports_priority</span></code></a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#fndummypriority" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></td>
+<td><p>Yes <a class="footnote-reference brackets" href="#fnimmediatepriority" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="s-available-backends">
+<span id="s-task-available-backends"></span><span id="available-backends"></span><span id="task-available-backends"></span><h3>Available backends<a class="headerlink" href="#available-backends" title="Link to this heading">¶</a></h3>
+<p>Django includes only development and testing backends. These support local
+execution and inspection, for production ready backends refer to
+<a class="reference internal" href="../../topics/tasks/#configuring-a-task-backend"><span class="std std-ref">Configuring a Task backend</span></a>.</p>
+<section id="s-module-django.tasks.backends.immediate">
+<span id="s-immediate-backend"></span><span id="module-django.tasks.backends.immediate"></span><span id="immediate-backend"></span><h4>Immediate backend<a class="headerlink" href="#module-django.tasks.backends.immediate" title="Link to this heading">¶</a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.backends.immediate.ImmediateBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImmediateBackend</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/immediate.py#L15"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.immediate.ImmediateBackend" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="../../topics/tasks/#immediate-task-backend"><span class="std std-ref">immediate backend</span></a> executes Tasks
+immediately, rather than in the background.</p>
+</dd></dl>
+
+</section>
+<section id="s-module-django.tasks.backends.dummy">
+<span id="s-dummy-backend"></span><span id="module-django.tasks.backends.dummy"></span><span id="dummy-backend"></span><h4>Dummy backend<a class="headerlink" href="#module-django.tasks.backends.dummy" title="Link to this heading">¶</a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.tasks.backends.dummy.DummyBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DummyBackend</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/dummy.py#L12"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.dummy.DummyBackend" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="../../topics/tasks/#dummy-task-backend"><span class="std std-ref">dummy backend</span></a> does not execute enqueued
+Tasks. Instead, it stores task results for later inspection.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.tasks.backends.dummy.DummyBackend.results">
+<span class="sig-name descname"><span class="pre">results</span></span><a class="headerlink" href="#django.tasks.backends.dummy.DummyBackend.results" title="Link to this definition">¶</a></dt>
+<dd><p>A list of results for the enqueued Tasks, in the order they were
+enqueued.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.tasks.backends.dummy.DummyBackend.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span>()<a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/backends/dummy.py#L63"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.backends.dummy.DummyBackend.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Clears the list of stored results.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="s-module-django.tasks.exceptions">
+<span id="s-exceptions"></span><span id="module-django.tasks.exceptions"></span><span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="#module-django.tasks.exceptions" title="Link to this heading">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.tasks.exceptions.InvalidTask">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidTask</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/exceptions.py#L8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.exceptions.InvalidTask" title="Link to this definition">¶</a></dt>
+<dd><p>Raised when the <a class="reference internal" href="#django.tasks.Task" title="django.tasks.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> attempting to be enqueued
+is invalid.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.tasks.exceptions.InvalidTaskBackend">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidTaskBackend</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/exceptions.py#L12"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.exceptions.InvalidTaskBackend" title="Link to this definition">¶</a></dt>
+<dd><p>Raised when the requested <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend" title="django.tasks.backends.base.BaseTaskBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseTaskBackend</span></code></a> is invalid.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.tasks.exceptions.TaskResultDoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskResultDoesNotExist</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/exceptions.py#L16"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.exceptions.TaskResultDoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Raised by <a class="reference internal" href="#django.tasks.backends.base.BaseTaskBackend.get_result" title="django.tasks.backends.base.BaseTaskBackend.get_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_result()</span></code></a>
+when the provided <code class="docutils literal notranslate"><span class="pre">result_id</span></code> does not exist.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.tasks.exceptions.TaskResultMismatch">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskResultMismatch</span></span><a class="reference external" href="https://github.com/django/django/blob/stable/6.0.x/django/tasks/exceptions.py#L20"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.tasks.exceptions.TaskResultMismatch" title="Link to this definition">¶</a></dt>
+<dd><p>Raised by <a class="reference internal" href="#django.tasks.Task.get_result" title="django.tasks.Task.get_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_result()</span></code></a> when the provided
+<code class="docutils literal notranslate"><span class="pre">result_id</span></code> is for a different Task than the current Task.</p>
+</dd></dl>
+
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="fnimmediateresult" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>The <a class="reference internal" href="#django.tasks.backends.immediate.ImmediateBackend" title="django.tasks.backends.immediate.ImmediateBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImmediateBackend</span></code></a> doesn’t officially
+support <code class="docutils literal notranslate"><span class="pre">get_result()</span></code>, despite implementing the API, since the result
+cannot be retrieved from a different thread.</p>
+</aside>
+<aside class="footnote brackets" id="fndummypriority" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>The <a class="reference internal" href="#django.tasks.backends.dummy.DummyBackend" title="django.tasks.backends.dummy.DummyBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">DummyBackend</span></code></a> has <code class="docutils literal notranslate"><span class="pre">supports_priority=True</span></code>
+so that it can be used as a drop-in replacement in tests. Since this
+backend never executes Tasks, the <code class="docutils literal notranslate"><span class="pre">priority</span></code> value has no effect.</p>
+</aside>
+<aside class="footnote brackets" id="fnimmediatepriority" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>The <a class="reference internal" href="#django.tasks.backends.immediate.ImmediateBackend" title="django.tasks.backends.immediate.ImmediateBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImmediateBackend</span></code></a> has
+<code class="docutils literal notranslate"><span class="pre">supports_priority=True</span></code> so that it can be used as a drop-in replacement
+in tests. Because Tasks run as soon as they are scheduled, the <code class="docutils literal notranslate"><span class="pre">priority</span></code>
+value has no effect.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    </article>
+  
+
+  
+    <nav class="browse-horizontal" aria-labelledby="browse-horizontal-header">
+      <span id="browse-horizontal-header" class="visuallyhidden">Previous page and next page</span>
+      
+        <div class="left"><a rel="prev" href="../signals/"><i class="icon icon-chevron-left"></i> Signals</a></div>
+      
+      
+        <div class="right"><a rel="next" href="../templates/">Templates <i class="icon icon-chevron-right"></i></a></div>
+      
+    </nav>
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      <img src="https://static.djangoproject.com/img/fundraising-heart.cd6bb84ffd33.svg" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="https://www.djangoproject.com/fundraising/">
+          Maxisoft Sistema donated to the Django Software Foundation to support Django development. Donate today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+<li><a class="reference internal" href="#">Tasks</a><ul>
+<li><a class="reference internal" href="#task-definition">Task definition</a><ul>
+<li><a class="reference internal" href="#the-task-decorator">The <code class="docutils literal notranslate"><span class="pre">task</span></code> decorator</a></li>
+<li><a class="reference internal" href="#task"><code class="docutils literal notranslate"><span class="pre">Task</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#task-context">Task context</a></li>
+<li><a class="reference internal" href="#task-results">Task results</a><ul>
+<li><a class="reference internal" href="#task-errors">Task errors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#backends">Backends</a><ul>
+<li><a class="reference internal" href="#module-django.tasks.backends.base">Base backend</a><ul>
+<li><a class="reference internal" href="#feature-flags">Feature flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#available-backends">Available backends</a><ul>
+<li><a class="reference internal" href="#module-django.tasks.backends.immediate">Immediate backend</a></li>
+<li><a class="reference internal" href="#module-django.tasks.backends.dummy">Dummy backend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-django.tasks.exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      <nav aria-labelledby="browse-header">
+        <h3 id="browse-header">Browse</h3>
+        <ul>
+          
+            
+              <li>Prev: <a rel="prev" href="../signals/">Signals</a></li>
+            
+            
+              <li>Next: <a rel="next" href="../templates/">Templates</a></li>
+            
+            <li><a href="https://docs.djangoproject.com/en/6.0/contents/">Table of contents</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/genindex/">General Index</a></li>
+            
+              <li><a href="https://docs.djangoproject.com/en/6.0/py-modindex/">Python Module Index</a></li>
+            
+          
+        </ul>
+      </nav>
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          <li>
+            <a href="https://docs.djangoproject.com/en/6.0/">Django 6.0 documentation</a>
+            
+              <ul><li><a href="../">API Reference</a>
+            
+            <ul><li>Tasks</li></ul>
+            </li></ul>
+          </li>
+        </ul>
+      </nav>
+    
+
+    
+      <section aria-labelledby="getting-help-sidebar">
+        <h3 id="getting-help-sidebar">Getting help</h3>
+        <dl class="list-links">
+          <dt><a href="https://docs.djangoproject.com/en/6.0/faq/">FAQ</a></dt>
+          <dd>Try the FAQ — it's got answers to many common questions.</dd>
+
+          <dt><a href="/en/stable/genindex/">Index</a>, <a href="/en/stable/py-modindex/">Module Index</a>, or <a href="/en/stable/contents/">Table of Contents</a></dt>
+          <dd>Handy when looking for specific information.</dd>
+
+          <dt><a href="https://chat.djangoproject.com">Django Discord Server</a></dt>
+          <dd>Join the Django Discord Community.</dd>
+
+          <dt><a href="https://forum.djangoproject.com/">Official Django Forum</a></dt>
+          <dd>Join the community on the Django Forum.</dd>
+
+          <dt><a href="https://code.djangoproject.com/">Ticket tracker</a></dt>
+          <dd>Report bugs with Django or Django documentation in our ticket tracker.</dd>
+        </dl>
+      </section>
+    
+
+    
+      <section aria-labelledby="links-wrapper-header">
+        <h3 id="links-wrapper-header">Download:</h3>
+        <p>
+          Offline (Django 6.0):
+          <a href="https://media.djangoproject.com/docs/django-docs-6.0-en.zip">HTML</a> |
+          <a href="https://media.readthedocs.org/pdf/django/6.0.x/django.pdf">PDF</a> |
+          <a href="https://media.readthedocs.org/epub/django/6.0.x/django.epub">ePub</a>
+          <br>
+          <span class="quiet">
+            Provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+          </span>
+        </p>
+      </section>
+    
+
+    
+  <div class="corporate-members">
+    <h3>Diamond and Platinum Members</h3>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://sentry.io/for/django/" title="Sentry">
+            <img src="https://media.djangoproject.com/cache/7a/f9/7af9c770dc49465739a82c91a0eb3d51.png" alt="Sentry" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>Sentry</strong></li>
+            <li><a href="https://sentry.io/for/django/" title="Sentry">
+              Monitor your Django Code
+Resolve performance bottlenecks and errors using monitoring, replays, logs and Seer an AI agent for debugging.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="clearfix">
+        <div class="member-logo">
+          <a href="https://jb.gg/ybja10" title="JetBrains">
+            <img src="https://media.djangoproject.com/cache/c0/ea/c0ea128467983e64aab91cd27e7918c0.png" alt="JetBrains" />
+          </a>
+        </div>
+        <div class="small-cta">
+          <ul class="list-links-small">
+            <li><strong>JetBrains</strong></li>
+            <li><a href="https://jb.gg/ybja10" title="JetBrains">
+              JetBrains delivers intelligent software solutions that make developers more productive by simplifying their challenging tasks, automating the routine, and helping them adopt the best development practices. PyCharm is the Python IDE for Professional Developers by JetBrains providing a complete set of tools for productive Python, Web and scientific development.
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    
+  </div>
+
+
+  </div>
+
+      
+
+    </div>
+
+     
+     
+
+    
+    
+    
+
+    <!-- SVGs -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+    </svg>
+    <!-- END SVGs -->
+
+    
+      
+
+<footer>
+  <div class="subfooter">
+    <div class="container">
+      <h2 class="visuallyhidden">Django Links</h2>
+      <div class="column-container">
+        <div class="col-learn-more">
+          <h3>Learn More</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/start/overview/">About Django</a></li>
+            
+            <li><a href="https://www.djangoproject.com/start/">Getting Started with Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/teams/">Team Organization</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/">Django Software Foundation</a></li>
+            <li><a href="https://www.djangoproject.com/conduct/">Code of Conduct</a></li>
+            <li><a href="https://www.djangoproject.com/diversity/">Diversity Statement</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/community/">Join a Group</a></li>
+            <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Contribute
+              to Django</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">Submit
+              a Bug</a></li>
+            <li><a
+              href="https://docs.djangoproject.com/en/dev/internals/security/#reporting-security-issues">Report
+              a Security Issue</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/individual-members/">Individual membership</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            <li><a href="https://docs.djangoproject.com/en/stable/faq/">Getting Help FAQ</a>
+            </li>
+            <li><a href="https://chat.djangoproject.com" target="_blank">Django Discord</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://github.com/django">GitHub</a></li>
+            <li><a href="https://x.com/djangoproject">X</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
+            <li><a href="https://bsky.app/profile/djangoproject.com">Bluesky</a></li>
+            <li><a href="https://www.linkedin.com/company/django-software-foundation">LinkedIn</a></li>
+            <li><a href="https://www.djangoproject.com/rss/weblog/">News RSS</a></li>
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            <li><a href="https://www.djangoproject.com/fundraising/">Sponsor Django</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
+            <li><a href="https://www.djangoproject.com/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+  
+
+
+    
+      
+      <script>
+        function extless(input) {
+          return input.replace(/(.*)\.[^.]+$/, '$1');
+        }
+        var require = {
+          shim: {
+            'jquery': [],
+            'stripe': {
+              exports: 'Stripe'
+            }
+          },
+          paths: {
+            "jquery": extless("https://static.djangoproject.com/js/lib/jquery.min.5790ead7ad3b.js"),
+            "mod/list-collapsing": extless("https://static.djangoproject.com/js/mod/list-collapsing.2d844151b2ec.js"),
+            "mod/stripe-change-card": extless("https://static.djangoproject.com/js/mod/stripe-change-card.eaa0afc324e9.js"),
+            "mod/switch-dark-mode": extless("https://static.djangoproject.com/js/mod/switch-dark-mode.139625c684db.js"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          }
+        };
+      </script>
+      <script data-main="https://static.djangoproject.com/js/main.8677b21133eb.js" src="https://static.djangoproject.com/js/lib/require.177879fbe7dd.js"></script>
+      <script src="https://static.djangoproject.com/js/djangoproject.15c016c8c3a7.js"></script>
+    
+  </body>
+</html>
