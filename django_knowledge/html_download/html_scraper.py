@@ -6,184 +6,232 @@ from loguru import logger
 from time import sleep
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from django.db.utils import IntegrityError
+from requests.exceptions import HTTPError
+from typing import Union
 
-from utils import dumped_html_path
+from .models import (
+    NotFoundURL,
+    Page,
+    ScrapedURLsCache,
+    URLToVisit,
+    URLToVisitCache,
+    HREFScraped,
+)
+from .utils import dumped_html_path
+
+
+scraped_url_cache = ScrapedURLsCache()
+urls_to_visit_cache = URLToVisitCache()
 
 
 class HTMLScraper:
-    BASE_URL_TO_SCRAPE = 'https://docs.djangoproject.com'
-    DOCS_LANG = 'en'
-    DJANGO_VERSION_TO_SCRAPE = '6.0'
-    LANG_TO_SCRAPE = 'en'
-    DJANGO_DOCS_ROOT_URL = f'{BASE_URL_TO_SCRAPE}/{LANG_TO_SCRAPE}/{DJANGO_VERSION_TO_SCRAPE}'
+    BASE_URL_TO_SCRAPE = "https://docs.djangoproject.com"
+    DOCS_LANG = "en"
+    DJANGO_VERSION_TO_SCRAPE = "6.0"
+    LANG_TO_SCRAPE = "en"
+    DJANGO_DOCS_ROOT_URL = (
+        f"{BASE_URL_TO_SCRAPE}/{LANG_TO_SCRAPE}/{DJANGO_VERSION_TO_SCRAPE}"
+    )
 
-    def __init__(self, base_url=None   ):
-        self.already_scraped_urls = set()
-        self.already_scraped_files = self.find_already_scraped_files()
-        logger.info(f'Found {len(self.already_scraped_files)} scraped files on disk already.')
+    def __init__(self, base_url=None):
         if base_url:
-            self.urls_to_scrape = set([base_url])
+            self.first_url_to_scrape = base_url
         else:
-            self.urls_to_scrape = set([self.DJANGO_DOCS_ROOT_URL])
-        self.page_not_found_filename = '404_urls.txt'
+            self.first_url_to_scrape = self.DJANGO_DOCS_ROOT_URL
 
-    def dumped_html_path(self):
-        return dumped_html_path()
+        self.url_to_visit = None
 
-    def find_already_scraped_files(self):
-        res = set()
-        path = self.dumped_html_path()
-        # ensure directory exists
-        path.mkdir(parents=True, exist_ok=True)
-        for file in os.listdir(path):
-            if file.endswith(".html"):
-                res.add(path / Path(file))
-        return res
+    class StubResponse:
+        def __init__(self, url, html):
+            self.status_code = 200
+            self.text = html
+            self.url = url
 
-    def url_to_filepath(self, url: str) -> Path:
-        filename = url.replace('//', '_').replace('/', '_').replace('.', '_').replace(':', '_')
-        path = self.dumped_html_path() / Path(filename + '.html')
-        return path
-    
-    def get_404_urls(self) -> set[str]:
-        try:
-            with open(self.page_not_found_filename, 'r') as f:
-                return set(f.read().split(';'))
-        except FileNotFoundError:
-            return set()
-            
-    def add_to_404_urls(self, url: str):
-        not_found_urls = self.get_404_urls()
-        not_found_urls.add(url)
-        with open(self.page_not_found_filename, 'w') as f:
-                f.write(';'.join(not_found_urls))
+    def get_html(
+        self, url, link
+    ) -> tuple[Union[requests.Response, StubResponse], bool, Page]:
+        if url in scraped_url_cache.get_all():
+            logger.info(f"URL already scraped and in DB, skipping: {url=}")
+            page = Page.get_page_by_url(url)
+            assert page
+            return self.StubResponse(url, page.html_content), False, page
 
+        if url in NotFoundURL.all_not_found_urls():
+            logger.info(f"URL previously marked as 404 in DB, skipping: {url=}")
+            raise self.PageNotFoundException(f"{url=}")
 
-
-    def get_html(self, url) -> tuple[str, bool]:
-        filepath = self.url_to_filepath(url)
-        if filepath in self.already_scraped_files:
-            logger.info(f'URL HTML file already on disk, skipping: {filepath=}')
-            with open(filepath, 'r') as f:
-                return f.read(), False
-
-        logger.info(f'Fetching URL: {url=}')
+        logger.info(f"Fetching URL: {url=}")
         resp = requests.get(url, timeout=10)
 
         if resp.status_code == 404:
-            self.add_to_404_urls(url)
+            NotFoundURL.objects.get_or_create(url=url)
+            breakpoint()
 
         resp.raise_for_status()
 
-        self.already_scraped_urls.add(url)
+        logger.info(f"Scraped: {url=}")
 
-        logger.info(f'Scraped: {url=}')
-
-        not_found_page_msg = "Looks like you followed a bad link. If you think it's our fault, please"
+        not_found_page_msg = (
+            "Looks like you followed a bad link. If you think it's our fault, please"
+        )
         if not_found_page_msg in resp.text:
+            NotFoundURL.objects.get_or_create(url=url)
             raise ValueError(f"Page not found: {url=}")
 
-        with open(filepath, 'w') as f:
-            f.write(resp.text)
+        page = Page.create(url=url, html_content=resp.text, cache=scraped_url_cache)
+        logger.info(f"Saved page to DB: {page=}")
 
-        logger.info(f'Dumped HTML to file: {filepath}')
+        return resp, True, page
 
-        self.already_scraped_files.add(filepath)
-
-        return resp.text, True
-    
     def assert_en_lang_in_url(self, url: str):
-        parts = url.split(self.BASE_URL_TO_SCRAPE + '/')
+        parts = url.split(self.BASE_URL_TO_SCRAPE + "/")
         if len(parts) < 2:
-            raise self.LanguageNotMatchedException(f'could not parse language -> {url=}')
-        page_language = parts[1].split('/')[0]
+            raise self.LanguageNotMatchedException(
+                f"could not parse language -> {url=}"
+            )
+        page_language = parts[1].split("/")[0]
         if page_language != self.LANG_TO_SCRAPE:
-            raise self.LanguageNotMatchedException(f'{page_language=} -> {url=}')
-        
+            raise self.LanguageNotMatchedException(f"{page_language=} -> {url=}")
+
     def assert_version_in_url(self, url: str):
-        parts = url.split(self.BASE_URL_TO_SCRAPE + '/' + self.LANG_TO_SCRAPE + '/')
+        parts = url.split(self.BASE_URL_TO_SCRAPE + "/" + self.LANG_TO_SCRAPE + "/")
         if len(parts) < 2:
-            raise self.VersionNotMatchedException(f'could not parse version -> {url=}')
-        page_version = parts[1].split('/')[0]
+            raise self.VersionNotMatchedException(f"could not parse version -> {url=}")
+        page_version = parts[1].split("/")[0]
         if not page_version.startswith(self.DJANGO_VERSION_TO_SCRAPE):
-            raise self.VersionNotMatchedException(f'{page_version=} -> {url=}')
-        
+            raise self.VersionNotMatchedException(f"{page_version=} -> {url=}")
+
     def assert_url_is_not_excluded(self, url):
         if not url.startswith(self.BASE_URL_TO_SCRAPE):
-                raise self.ExcludedURLException(f'{url=} , {url=}')
-        
-    def assert_url_is_not_404(self, url: str):
-        if url in self.get_404_urls():
-            raise self.PageNotFoundException(f"Previously marked as 404: {url}")
+            raise self.ExcludedURLException(f"{url=} , {url=}")
 
-    def get_soup(self, resp: str):
-        return BeautifulSoup(resp, 'html.parser')
-    
+    def get_soup(self, resp: Union[requests.Response, StubResponse]):
+        return BeautifulSoup(resp.text, "html.parser")
+
     def assert_url_is_valid(self, url: str):
         self.assert_url_is_not_excluded(url)
         self.assert_en_lang_in_url(url)
         self.assert_version_in_url(url)
-        self.assert_url_is_not_404(url)
-    
-    def make_full_valid_url(self, link, page_url:str) -> str:
+
+    def make_full_valid_url(
+        self, link, resp: Union[requests.Response, StubResponse]
+    ) -> str:
         def remove_hashtag(text: str) -> str:
-            return text.split('#')[0]
-        
-        url = link.get('href')
+            return text.split("#")[0]
+
+        url = link.get("href")
+
+        if url == "overview/":
+            pass
+
+        if url == "tutorial01/":
+            pass
+        if url == "../tutorial01/":
+            pass
+        if url == "../checks/":
+            pass
 
         if not url:
             raise self.BlankUrlException(url)
-        
-        elif url.startswith('http://'):
+
+        if "releases" in url:
+            raise self.ExcludedURLException(f"{url=}")
+
+        if not url:
+            raise self.BlankUrlException(url)
+
+        elif "contributing@" in url:
+            return ""
+
+        elif url.startswith("mailto:"):
+            return ""
+
+        elif url.startswith("http://"):
             raise self.NonHTTPSPageException(url)
-        
-        elif url.startswith('https://'):
+
+        elif url.startswith("https://"):
             self.assert_url_is_valid(url)
-            return remove_hashtag(url)
-        
-        elif url.startswith('#'):
+            final_url = remove_hashtag(url)
+
+        elif url.startswith("#"):
             raise self.LinkToCurrentPageException(url)
-        
-        elif link.has_attr('class'):
-            if 'reference' in link['class'] and 'internal' in link['class']:
-                full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.lstrip('/')}"
+
+        elif link.has_attr("class"):
+            if "reference" in link["class"] and "internal" in link["class"]:
+                page_url_split = resp.url.split("/")
+                if resp.url.endswith("/"):
+                    page_url_split.pop()
+
+                url_split = url.split("../")
+                for _ in range(url.count("../")):
+                    page_url_split.pop()
+                    url_split.pop(0)
+
+                page_url_split.append("")
+
+                new_page_url = "/".join(page_url_split)
+                new_url = "".join(url_split)
+                full_url = urljoin(new_page_url, new_url)
                 self.assert_url_is_valid(full_url)
-                return remove_hashtag(full_url)
-        
-        elif url.strip('/') in {'contents', 'intro'}:
+                final_url = remove_hashtag(full_url)
+
+        elif url.strip("/") in {"contents", "intro"}:
             full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.lstrip('/')}"
             self.assert_url_is_valid(full_url)
-            return remove_hashtag(full_url)
-        
-        elif url.startswith('/en/stable/'):
+            final_url = remove_hashtag(full_url)
+
+        elif url.startswith("/en/stable/"):
             full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.split('/en/stable/')[-1]}"
             self.assert_url_is_valid(full_url)
-            return remove_hashtag(full_url)
-        
-        elif url.startswith('..'):
-            full_url = urljoin(page_url, url)
-            self.assert_url_is_valid(full_url)
-            return remove_hashtag(full_url)
-        
-        try:
-            rel = link['rel'][0]
-            if rel == 'next':
-                full_url = urljoin(page_url, url)
-                self.assert_url_is_valid(full_url)
-                return remove_hashtag(full_url)
-        except KeyError:
-            pass
+            final_url = remove_hashtag(full_url)
 
-        raise ValueError(f'Could not make full valid URL from link: {url=} {link=}')
+        elif url.startswith(".."):
+            page_url_split = resp.url.split("/")
+            if resp.url.endswith("/"):
+                page_url_split.pop()
+
+            url_split = url.split("../")
+            for _ in range(url.count("../")):
+                page_url_split.pop()
+                url_split.pop(0)
+
+            page_url_split.append("")
+
+            new_page_url = "/".join(page_url_split)
+            new_url = "".join(url_split)
+            full_url = urljoin(new_page_url, new_url)
+            self.assert_url_is_valid(full_url)
+            final_url = remove_hashtag(full_url)
+
+        elif link.has_attr("rel") and "next" in link["rel"]:
+            full_url = urljoin(resp.url, url)
+            self.assert_url_is_valid(full_url)
+            final_url = remove_hashtag(full_url)
+
+        else:
+            pass
+            raise ValueError(
+                f"Could not parse URL: {url=} from page {resp.url=} with link {link}"
+            )
+
+        if final_url in to_break:
+            breakpoint()
+
+        return final_url
 
     def extract_links(self, soup):
-        urls = soup.find_all('a')
+        urls = soup.find_all("a")
         return urls
-    
-    def extend_urls_to_scrape(self, links, page_url: str):
+
+    def extend_urls_to_scrape(
+        self, links, resp: Union[requests.Response, StubResponse], page: Page
+    ):
         for link in links:
+            if link.get("href"):
+                HREFScraped.get_or_create(url=link.get("href"))
             try:
-                url = self.make_full_valid_url(link, page_url)
+                url = self.make_full_valid_url(link, resp)
             except self.Error as e:
                 # logger.exception(e)
                 continue
@@ -191,42 +239,66 @@ class HTMLScraper:
             if not url:
                 continue
 
-            if url in self.get_404_urls():
-                continue
+            self.add_url_to_scrape(page, url, link)
 
-            if url in self.already_scraped_urls:
-                logger.info(f'Will not scrape {url} again!')
-                continue
+    def add_url_to_scrape(self, page: Page, url, link):
+        if url in urls_to_visit_cache.get_all():
+            logger.info(f"URLToVisit already in cache, skipping: {url=}")
+            return
+        try:
+            URLToVisit.create(page, url, str(link), urls_to_visit_cache)
+        except IntegrityError:
+            logger.info(f"URLToVisit already exists in DB, skipping: {url=}")
 
-            self.urls_to_scrape.add(url)
-    
+    def get_url_to_scrape(self) -> URLToVisit:
+        obj = URLToVisit.get_one_not_processed()
+        if not obj:
+            raise ValueError("No more URLs to scrape")
+        return obj
+
     def scrape_all(self):
-        not_found_pages = set()
-        while self.urls_to_scrape:
-            logger.info(f'Remaining URLs to scrape: {len(self.urls_to_scrape)=}')
-            url = self.urls_to_scrape.pop()
+        first_url_scraped = False
+        while True:
+            if not first_url_scraped:
+                url = self.first_url_to_scrape
+                self.url_to_visit = None
+                link = None
+                first_url_scraped = True
+            else:
+                self.url_to_visit = self.get_url_to_scrape()
+                url = self.url_to_visit.url
+                link = BeautifulSoup(self.url_to_visit.link_element, "html.parser")
+
+            if not url:
+                break
+
             try:
-                resp, scraped = self.get_html(url)
+                resp, scraped, page = self.get_html(url, link)
             except self.Error as e:
                 # logger.exception(e)
+                if self.url_to_visit:
+                    self.url_to_visit.mark_processed()
                 continue
             except self.PageNotFoundException:
-                not_found_pages.add(url)
+                if self.url_to_visit:
+                    self.url_to_visit.mark_processed()
+                continue
+            except HTTPError as e:
                 continue
 
-            logger.info(f'Got HTML for URL: {url=}')
+            logger.info(f"Got HTML for URL: {url=}")
 
             soup = self.get_soup(resp)
             links = self.extract_links(soup)
-            self.extend_urls_to_scrape(links, url)
+            self.extend_urls_to_scrape(links, resp, page)
+
+            if self.url_to_visit:
+                self.url_to_visit.mark_processed()
 
             if scraped:
-                x = 1
-                logger.info(f'Going to sleep {x} seconds...')
-                logger.info(f'Remaining URLs to scrape: {len(self.urls_to_scrape)=}')
+                x = 2
+                logger.info(f"Going to sleep {x} seconds...")
                 sleep(x)
-        
-        print(not_found_pages)
 
     class Error(Exception):
         pass
@@ -251,3 +323,10 @@ class HTMLScraper:
 
     class PageNotFoundException(Exception):
         pass
+
+    class AlreadyScrapedURLException(Exception):
+        pass
+
+
+to_break = {"https://docs.djangoproject.com/en/6.0/ref/contrib/django-admin/"}
+
