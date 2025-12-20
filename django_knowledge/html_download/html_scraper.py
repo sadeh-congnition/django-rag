@@ -17,11 +17,14 @@ class HTMLScraper:
     LANG_TO_SCRAPE = 'en'
     DJANGO_DOCS_ROOT_URL = f'{BASE_URL_TO_SCRAPE}/{LANG_TO_SCRAPE}/{DJANGO_VERSION_TO_SCRAPE}'
 
-    def __init__(self):
+    def __init__(self, base_url=None   ):
         self.already_scraped_urls = set()
         self.already_scraped_files = self.find_already_scraped_files()
         logger.info(f'Found {len(self.already_scraped_files)} scraped files on disk already.')
-        self.urls_to_scrape = set([self.DJANGO_DOCS_ROOT_URL])
+        if base_url:
+            self.urls_to_scrape = set([base_url])
+        else:
+            self.urls_to_scrape = set([self.DJANGO_DOCS_ROOT_URL])
         self.page_not_found_filename = '404_urls.txt'
 
     def dumped_html_path(self):
@@ -70,10 +73,7 @@ class HTMLScraper:
         if resp.status_code == 404:
             self.add_to_404_urls(url)
 
-        try:
-            resp.raise_for_status()
-        except requests.HTTPError:
-            raise self.PageNotFoundException(f"Page not found or HTTP error: {url}")
+        resp.raise_for_status()
 
         self.already_scraped_urls.add(url)
 
@@ -81,7 +81,7 @@ class HTMLScraper:
 
         not_found_page_msg = "Looks like you followed a bad link. If you think it's our fault, please"
         if not_found_page_msg in resp.text:
-            raise self.PageNotFoundException(f"Page not found: {url=}")
+            raise ValueError(f"Page not found: {url=}")
 
         with open(filepath, 'w') as f:
             f.write(resp.text)
@@ -251,5 +251,3 @@ class HTMLScraper:
 
     class PageNotFoundException(Exception):
         pass
-
-
