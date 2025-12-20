@@ -1,10 +1,11 @@
-import glob, os
+import os
 import requests
 from pathlib import Path
 from rich import print
 from loguru import logger
 from time import sleep
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 from utils import dumped_html_path
 
@@ -21,63 +22,66 @@ class HTMLScraper:
         self.already_scraped_files = self.find_already_scraped_files()
         logger.info(f'Found {len(self.already_scraped_files)} scraped files on disk already.')
         self.urls_to_scrape = set([self.DJANGO_DOCS_ROOT_URL])
+        self.page_not_found_filename = '404_urls.txt'
 
     def dumped_html_path(self):
         return dumped_html_path()
 
     def find_already_scraped_files(self):
         res = set()
-        for file in os.listdir(self.dumped_html_path()):
+        path = self.dumped_html_path()
+        # ensure directory exists
+        path.mkdir(parents=True, exist_ok=True)
+        for file in os.listdir(path):
             if file.endswith(".html"):
-                res.add(self.dumped_html_path() / Path(file))
+                res.add(path / Path(file))
         return res
 
-    def url_to_filepath(self, url: str)->str:
+    def url_to_filepath(self, url: str) -> Path:
         filename = url.replace('//', '_').replace('/', '_').replace('.', '_').replace(':', '_')
         path = self.dumped_html_path() / Path(filename + '.html')
         return path
+    
+    def get_404_urls(self) -> set[str]:
+        try:
+            with open(self.page_not_found_filename, 'r') as f:
+                return set(f.read().split(';'))
+        except FileNotFoundError:
+            return set()
+            
+    def add_to_404_urls(self, url: str):
+        not_found_urls = self.get_404_urls()
+        not_found_urls.add(url)
+        with open(self.page_not_found_filename, 'w') as f:
+                f.write(';'.join(not_found_urls))
 
-    def get_html(self, url)->tuple[str, bool]:
-        url_to_scrape = ''
 
-        if not url:
-            raise self.BlankUrlException(url)
 
-        if url.startswith('http:'):
-            raise self.NonHTTPSPageException(url)
-        
-        url = url.replace('../', '')
-
-        if not url.startswith('https'):  # relative path to another page
-            url_to_scrape = f"{self.DJANGO_DOCS_ROOT_URL}/{url}"
-        else:
-            url_to_scrape = url
-
-        url_to_scrape = url_to_scrape.split('#')[0]
-
-        self.assert_url_is_not_excluded(url_to_scrape)
-        
-        filepath = self.url_to_filepath(url_to_scrape)
+    def get_html(self, url) -> tuple[str, bool]:
+        filepath = self.url_to_filepath(url)
         if filepath in self.already_scraped_files:
             logger.info(f'URL HTML file already on disk, skipping: {filepath=}')
             with open(filepath, 'r') as f:
                 return f.read(), False
 
-        self.assert_en_lang_in_url(url_to_scrape)
-        
-        self.assert_version_in_url(url_to_scrape)
+        logger.info(f'Fetching URL: {url=}')
+        resp = requests.get(url, timeout=10)
 
-        if not url_to_scrape:
-            raise ValueError
+        if resp.status_code == 404:
+            self.add_to_404_urls(url)
 
-        resp = requests.get(url_to_scrape)
+        try:
+            resp.raise_for_status()
+        except requests.HTTPError:
+            raise self.PageNotFoundException(f"Page not found or HTTP error: {url}")
+
         self.already_scraped_urls.add(url)
 
-        logger.info(f'Scraped: {url=} , {url_to_scrape=}')
+        logger.info(f'Scraped: {url=}')
 
-        not_found_page_msg="Looks like you followed a bad link. If you think it's our fault, please"
+        not_found_page_msg = "Looks like you followed a bad link. If you think it's our fault, please"
         if not_found_page_msg in resp.text:
-            raise self.PageNotFoundException(f"Page not found: {url=}, {url_to_scrape=}")
+            raise self.PageNotFoundException(f"Page not found: {url=}")
 
         with open(filepath, 'w') as f:
             f.write(resp.text)
@@ -89,51 +93,132 @@ class HTMLScraper:
         return resp.text, True
     
     def assert_en_lang_in_url(self, url: str):
-        page_language = url.split(self.BASE_URL_TO_SCRAPE + '/')[1][:2]
+        parts = url.split(self.BASE_URL_TO_SCRAPE + '/')
+        if len(parts) < 2:
+            raise self.LanguageNotMatchedException(f'could not parse language -> {url=}')
+        page_language = parts[1].split('/')[0]
         if page_language != self.LANG_TO_SCRAPE:
             raise self.LanguageNotMatchedException(f'{page_language=} -> {url=}')
         
     def assert_version_in_url(self, url: str):
-        page_version = url.split(self.BASE_URL_TO_SCRAPE + '/' + self.LANG_TO_SCRAPE + '/')[1][:3]
-        if self.DJANGO_VERSION_TO_SCRAPE not in page_version:
+        parts = url.split(self.BASE_URL_TO_SCRAPE + '/' + self.LANG_TO_SCRAPE + '/')
+        if len(parts) < 2:
+            raise self.VersionNotMatchedException(f'could not parse version -> {url=}')
+        page_version = parts[1].split('/')[0]
+        if not page_version.startswith(self.DJANGO_VERSION_TO_SCRAPE):
             raise self.VersionNotMatchedException(f'{page_version=} -> {url=}')
         
     def assert_url_is_not_excluded(self, url):
         if not url.startswith(self.BASE_URL_TO_SCRAPE):
                 raise self.ExcludedURLException(f'{url=} , {url=}')
+        
+    def assert_url_is_not_404(self, url: str):
+        if url in self.get_404_urls():
+            raise self.PageNotFoundException(f"Previously marked as 404: {url}")
 
     def get_soup(self, resp: str):
         return BeautifulSoup(resp, 'html.parser')
     
+    def assert_url_is_valid(self, url: str):
+        self.assert_url_is_not_excluded(url)
+        self.assert_en_lang_in_url(url)
+        self.assert_version_in_url(url)
+        self.assert_url_is_not_404(url)
+    
+    def make_full_valid_url(self, link, page_url:str) -> str:
+        def remove_hashtag(text: str) -> str:
+            return text.split('#')[0]
+        
+        url = link.get('href')
+
+        if not url:
+            raise self.BlankUrlException(url)
+        
+        elif url.startswith('http://'):
+            raise self.NonHTTPSPageException(url)
+        
+        elif url.startswith('https://'):
+            self.assert_url_is_valid(url)
+            return remove_hashtag(url)
+        
+        elif url.startswith('#'):
+            raise self.LinkToCurrentPageException(url)
+        
+        elif link.has_attr('class'):
+            if 'reference' in link['class'] and 'internal' in link['class']:
+                full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.lstrip('/')}"
+                self.assert_url_is_valid(full_url)
+                return remove_hashtag(full_url)
+        
+        elif url.strip('/') in {'contents', 'intro'}:
+            full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.lstrip('/')}"
+            self.assert_url_is_valid(full_url)
+            return remove_hashtag(full_url)
+        
+        elif url.startswith('/en/stable/'):
+            full_url = f"{self.DJANGO_DOCS_ROOT_URL}/{url.split('/en/stable/')[-1]}"
+            self.assert_url_is_valid(full_url)
+            return remove_hashtag(full_url)
+        
+        elif url.startswith('..'):
+            full_url = urljoin(page_url, url)
+            self.assert_url_is_valid(full_url)
+            return remove_hashtag(full_url)
+        
+        try:
+            rel = link['rel'][0]
+            if rel == 'next':
+                full_url = urljoin(page_url, url)
+                self.assert_url_is_valid(full_url)
+                return remove_hashtag(full_url)
+        except KeyError:
+            pass
+
+        raise ValueError(f'Could not make full valid URL from link: {url=} {link=}')
+
     def extract_links(self, soup):
         urls = soup.find_all('a')
         return urls
     
-    def extend_urls_to_scrape(self, links):
+    def extend_urls_to_scrape(self, links, page_url: str):
         for link in links:
-            url = link.get('href')
+            try:
+                url = self.make_full_valid_url(link, page_url)
+            except self.Error as e:
+                # logger.exception(e)
+                continue
+
+            if not url:
+                continue
+
+            if url in self.get_404_urls():
+                continue
+
             if url in self.already_scraped_urls:
                 logger.info(f'Will not scrape {url} again!')
                 continue
-            self.urls_to_scrape.add(link.get('href'))
+
+            self.urls_to_scrape.add(url)
     
     def scrape_all(self):
-        breakpoint()
         not_found_pages = set()
-        while True:
+        while self.urls_to_scrape:
+            logger.info(f'Remaining URLs to scrape: {len(self.urls_to_scrape)=}')
             url = self.urls_to_scrape.pop()
             try:
                 resp, scraped = self.get_html(url)
             except self.Error as e:
-                logger.exception(e)
+                # logger.exception(e)
                 continue
             except self.PageNotFoundException:
                 not_found_pages.add(url)
                 continue
 
-            soup = scraper.get_soup(resp)
-            links = scraper.extract_links(soup)
-            scraper.extend_urls_to_scrape(links)
+            logger.info(f'Got HTML for URL: {url=}')
+
+            soup = self.get_soup(resp)
+            links = self.extract_links(soup)
+            self.extend_urls_to_scrape(links, url)
 
             if scraped:
                 x = 1

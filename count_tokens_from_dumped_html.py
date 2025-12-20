@@ -1,3 +1,5 @@
+# Coded by the VS Code Agent using GPT-5 mini model
+# No human editing needed to run successfully
 from pathlib import Path
 from html.parser import HTMLParser
 import sys
