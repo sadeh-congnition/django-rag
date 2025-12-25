@@ -1,0 +1,33 @@
+from dataclasses import dataclass
+from pytest import fixture
+from html_download.models import NotFoundURL, URLToVisit, Page
+from html_download.html_scraper import HTMLScraper
+
+
+@dataclass()
+class TestHTTPClient:
+    status_code: int = 200
+    url: str = ""
+    text: str = ""
+
+    def get(self, url, timeout=10):
+        return self
+
+
+@fixture
+def http_client(db):
+    return TestHTTPClient()
+
+
+@fixture
+def base_url():
+    return "https://example.com"
+
+
+def test_link_starting_with_https(http_client, base_url):
+    scraper = HTMLScraper(base_url=base_url, http_client=http_client)
+    scraper.scrape_all()
+
+    assert NotFoundURL.objects.count() == 0
+    assert URLToVisit.objects.count() == 1
+    assert Page.objects.count() == 1

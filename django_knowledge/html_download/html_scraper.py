@@ -18,7 +18,6 @@ from .models import (
     URLToVisitCache,
     HREFScraped,
 )
-from .utils import dumped_html_path
 
 
 scraped_url_cache = ScrapedURLsCache()
@@ -34,7 +33,8 @@ class HTMLScraper:
         f"{BASE_URL_TO_SCRAPE}/{LANG_TO_SCRAPE}/{DJANGO_VERSION_TO_SCRAPE}"
     )
 
-    def __init__(self, base_url=None):
+    def __init__(self, base_url=None, http_client=requests):
+        self.http_client = http_client
         if base_url:
             self.first_url_to_scrape = base_url
         else:
@@ -62,7 +62,7 @@ class HTMLScraper:
             raise self.PageNotFoundException(f"{url=}")
 
         logger.info(f"Fetching URL: {url=}")
-        resp = requests.get(url, timeout=10)
+        resp = self.http_client.get(url, timeout=10)
 
         if resp.status_code == 404:
             NotFoundURL.objects.get_or_create(url=url)
@@ -150,14 +150,14 @@ class HTMLScraper:
         elif url.startswith("http://"):
             raise self.NonHTTPSPageException(url)
 
-        elif url.startswith("https://"):
+        elif url.startswith("https://"):  # TestCase1
             self.assert_url_is_valid(url)
             final_url = remove_hashtag(url)
 
-        elif url.startswith("#"):
+        elif url.startswith("#"):  # TestCase2
             raise self.LinkToCurrentPageException(url)
 
-        elif link.has_attr("class"):
+        elif link.has_attr("class"):  # TestCase3
             if "reference" in link["class"] and "internal" in link["class"]:
                 page_url_split = resp.url.split("/")
                 if resp.url.endswith("/"):
@@ -216,7 +216,8 @@ class HTMLScraper:
             )
 
         if final_url in to_break:
-            breakpoint()
+            pass
+            # breakpoint()
 
         return final_url
 
@@ -253,7 +254,7 @@ class HTMLScraper:
     def get_url_to_scrape(self) -> URLToVisit:
         obj = URLToVisit.get_one_not_processed()
         if not obj:
-            raise ValueError("No more URLs to scrape")
+            raise self.NoURLsToScrape("No more URLs to scrape")
         return obj
 
     def scrape_all(self):
@@ -265,7 +266,10 @@ class HTMLScraper:
                 link = None
                 first_url_scraped = True
             else:
-                self.url_to_visit = self.get_url_to_scrape()
+                try:
+                    self.url_to_visit = self.get_url_to_scrape()
+                except self.NoURLsToScrape:
+                    break
                 url = self.url_to_visit.url
                 link = BeautifulSoup(self.url_to_visit.link_element, "html.parser")
 
@@ -296,11 +300,18 @@ class HTMLScraper:
                 self.url_to_visit.mark_processed()
 
             if scraped:
-                x = 2
+                pytest_run = os.getenv("PYTEST_CURRENT_TEST")
+                if pytest_run:
+                    x = 0
+                else:
+                    x = 2
                 logger.info(f"Going to sleep {x} seconds...")
                 sleep(x)
 
     class Error(Exception):
+        pass
+
+    class NoURLsToScrape(Error):
         pass
 
     class ExcludedURLException(Error):
@@ -329,4 +340,3 @@ class HTMLScraper:
 
 
 to_break = {"https://docs.djangoproject.com/en/6.0/ref/contrib/django-admin/"}
-
