@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'html_download',
+    'embeddings_evaluator',
+    'synthetic_data_generator',
 ]
 
 MIDDLEWARE = [
