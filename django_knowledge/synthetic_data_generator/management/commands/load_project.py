@@ -69,7 +69,18 @@ def command(path):
     )
 
 def find_python_files(path):
-    """Generator that yields all Python files in the given path recursively."""
+    """Generator that yields all Python files in the given path recursively, skipping virtual env directories."""
+    # Common virtual environment directory names
+    venv_dirs = {'venv', '.venv', 'env', '.env', 'virtualenv', '.virtualenv', 'envs', '.envs'}
+    
     for item in path.rglob('*.py'):
         if item.is_file():
-            yield item
+            # Check if any parent directory is a virtual environment directory
+            skip_file = False
+            for parent in item.parents:
+                if parent.name in venv_dirs:
+                    skip_file = True
+                    break
+            
+            if not skip_file:
+                yield item

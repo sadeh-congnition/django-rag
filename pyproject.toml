@@ -3,12 +3,14 @@ name = "one"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.14.3",
+    "chonkie[code]>=1.5.1",
     "django>=6.0",
     "django-click>=2.4.1",
     "django-extensions>=4.1",
+    "httpx>=0.28.1",
     "loguru>=0.7.3",
     "markdownify>=1.2.2",
     "ptpython>=3.0.32",
