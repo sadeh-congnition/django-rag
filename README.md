@@ -117,3 +117,8 @@ The application uses the following main models:
 - **HREFScraped**: History of scraped href URLs
 
 Each page includes metadata like creation/update timestamps and content hashes for change detection.
+
+# Experiment Tracking
+uv run manage.py load_project ..
+uv run manage.py chunk_code
+uv run manage.py describe_chunk
