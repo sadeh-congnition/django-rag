@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('eval_score', models.FloatField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('embedding_model', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='evaluations', to='embeddings_evaluator.embeddingmodel')),
+                ('embedding_model', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='evaluations', to='experiment_tracking.embeddingmodel')),
             ],
             options={
                 'verbose_name': 'Evaluation',
