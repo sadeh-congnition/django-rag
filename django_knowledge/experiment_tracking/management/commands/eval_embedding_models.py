@@ -1,21 +1,24 @@
 import djclick as click
-from loguru import logger
+
+from experiment_tracking.models import EmbeddingModel, EmbedderEval
+from experiment_tracking.run import run_experiment
 
 
 @click.command()
 def eval_embedding_models():
-    """Evaluate embedding models performance"""
-    
-    logger.info(f"Evaluating embedding model: {model}")
-    
-    if test_dataset:
-        logger.info(f"Using test dataset: {test_dataset}")
-    else:
-        logger.info("Using default test dataset")
-    
-    # TODO: Implement embedding model evaluation logic
-    # This is a placeholder implementation
-    click.echo(f"Evaluation completed for model: {model}")
-    click.echo(f"Output format: {output_format}")
-    
-    logger.info("Embedding model evaluation completed")
+    EmbeddingModel.create_defaults()
+
+    for embedding_model_name, num_tests, score, eval_time in run_experiment(
+        EmbeddingModel.embed_funcs()
+    ):
+        embedding_model = EmbeddingModel.objects.get(name=embedding_model_name)
+        avrg_eval_time = eval_time / num_tests
+        name = "Embedder Accuracy@1"
+        EmbedderEval.objects.create(
+            embedding_model=embedding_model,
+            num_tests=num_tests,
+            eval_score=score,
+            name=name,
+            average_eval_time=avrg_eval_time,
+            total_eval_time=eval_time,
+        )

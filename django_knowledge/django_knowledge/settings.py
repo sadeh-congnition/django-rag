@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "chunking",
     "experiment_tracking",
     "synthetic_data_generator",
+    "code_fetching",
 ]
 
 MIDDLEWARE = [

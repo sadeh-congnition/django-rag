@@ -23,4 +23,5 @@ dependencies = [
     "litellm>=1.56.1",
     "pydantic>=2.10.0",
     "python-dotenv>=1.2.1",
+    "chromadb>=1.4.0",
 ]
