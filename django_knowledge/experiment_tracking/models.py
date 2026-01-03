@@ -96,10 +96,12 @@ class EmbedderEval(models.Model):
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    total_eval_time = models.FloatField()  # Measured in seconds
-    num_tests = models.IntegerField()
-    average_eval_time = models.FloatField()  # Measured in seconds
-    eval_score = models.FloatField()
+    num_tests = models.JSONField()
+    search_times = models.JSONField()
+    embedding_time = models.FloatField()
+    average_eval_time = models.FloatField()
+    eval_scores = models.JSONField()
+    average_score = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

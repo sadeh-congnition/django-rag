@@ -1,6 +1,6 @@
 from pathlib import Path
+import shutil
 
-from django.core.management.base import BaseCommand
 from django.db import transaction
 import djclick as click
 from loguru import logger
@@ -11,7 +11,8 @@ from synthetic_data_generator.models import PythonFile, Project
 
 @click.command()
 @click.argument('path')
-def command(path):
+@click.option('--delete', is_flag=True, help='Delete the directory after loading Python modules into database')
+def command(path, delete: bool=False):
     """Recursively traverse the given path and store Python files in the database."""
     logger.info(f"Starting traversal of path: {path}")
     
@@ -67,6 +68,17 @@ def command(path):
         f"Completed! Found {python_files_found} Python files, "
         f"stored {python_files_stored} new files."
     )
+    
+    if delete:
+        try:
+            project_path = Path(path)
+            if project_path.exists() and project_path.is_dir():
+                shutil.rmtree(project_path)
+                logger.success(f"Deleted directory: {project_path}")
+            else:
+                logger.warning(f"Directory not found or not a directory: {project_path}")
+        except Exception as e:
+            logger.error(f"Error deleting directory {path}: {e}")
 
 def find_python_files(path):
     """Generator that yields all Python files in the given path recursively, skipping virtual env directories."""
