@@ -1,4 +1,5 @@
 from django.db import models
+from loguru import logger
 from chromadb import EmbeddingFunction
 from embedding_generator.using_lm_studio import get_embeddings
 
@@ -86,13 +87,38 @@ class EmbeddingModelKlass(EmbeddingFunction):
     def __call__(self, input):
         res = []
         for text in input:
-            res.append(get_embeddings(self._name, text))
+            emb = get_embeddings(self._name, text)
+            assert emb
+            res.append(emb)
         return res
+
+
+class EmbedderEvalConfig(models.Model):
+    chunk_config = models.ForeignKey(
+        'chunking.ChunkConfig', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name="embedder_eval_configs"
+    )
+    content = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Embedder Evaluation Configuration"
+        verbose_name_plural = "Embedder Evaluation Configurations"
+
+    def __str__(self):
+        return f"Config {self.id}"
 
 
 class EmbedderEval(models.Model):
     embedding_model = models.ForeignKey(
         EmbeddingModel, on_delete=models.CASCADE, related_name="evaluations"
+    )
+    config = models.ForeignKey(
+        EmbedderEvalConfig, on_delete=models.CASCADE, related_name="evaluations", null=True, blank=True
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)

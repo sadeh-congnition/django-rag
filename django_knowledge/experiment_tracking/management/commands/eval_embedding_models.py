@@ -1,12 +1,18 @@
 import djclick as click
 
-from experiment_tracking.models import EmbeddingModel, EmbedderEval
+from chunking.models import ChunkConfig
+from experiment_tracking.models import EmbeddingModel, EmbedderEval, EmbedderEvalConfig
 from experiment_tracking.run import run_experiment
 
 
 @click.command()
-def eval_embedding_models():
+@click.argument("chunk_config_id", type=int)
+def eval_embedding_models(chunk_config_id):
     EmbeddingModel.create_defaults()
+    
+    chunk_config = ChunkConfig.objects.get(id=chunk_config_id)
+
+    num_rounds = 1
 
     for (
         embedding_model_name,
@@ -14,7 +20,7 @@ def eval_embedding_models():
         scores,
         search_times,
         embedding_time,
-    ) in run_experiment(EmbeddingModel.embed_funcs(), num_rounds=1):
+    ) in run_experiment(EmbeddingModel.embed_funcs(), num_rounds=num_rounds, chunk_config_id=chunk_config_id):
         embedding_model = EmbeddingModel.objects.get(name=embedding_model_name)
 
         eval_time_per_round = []
@@ -23,10 +29,27 @@ def eval_embedding_models():
 
         avrg_eval_time = sum(eval_time_per_round) / len(search_times)
 
+        embedder_eval_config = EmbedderEvalConfig.objects.create(
+            chunk_config=chunk_config,
+            content={
+                "metrics": {
+                    "average_eval_time": avrg_eval_time,
+                    "average_score": sum(scores) / len(scores),
+                    "num_tests": num_tests,
+                    "scores": scores,
+                    "search_times": search_times,
+                    "embedding_time": embedding_time,
+                }
+            }
+        )
+
         name = "Embedder Accuracy@1"
-        description = "Evaluating embedder models performance, 10 rounds per model"
+        description = (
+            f"Evaluating embedder models performance, {num_rounds} rounds per model"
+        )
         EmbedderEval.objects.create(
             embedding_model=embedding_model,
+            config=embedder_eval_config,
             name=name,
             description=description,
             num_tests=num_tests,

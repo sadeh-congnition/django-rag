@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Optional, Type
+from typing import Dict, List, Optional, Type
 
 import chromadb
 
@@ -11,24 +11,26 @@ class Doc:
 
 
 class ChromaDB:
-    def __init__(self, path: Optional[str] = None):
+    def __init__(
+        self,
+        collection_name: str,
+        embedding_generator: Type,
+        path: Optional[str] = None,
+    ):
         if path:
             self.client = chromadb.PersistentClient(path=path)
         else:
             self.client = chromadb.Client()
-        self.collection = None
-
-    def add(
-        self,
-        collection_name: str,
-        embedding_generator: Type,
-        documents: List[Doc],
-        metadatas: Optional[List[Dict]] = None,
-    ) -> None:
         self.collection = self.client.get_or_create_collection(
             name=collection_name, embedding_function=embedding_generator
         )
+        self.collection_name = collection_name
 
+    def add(
+        self,
+        documents: List[Doc],
+        metadatas: Optional[List[Dict]] = None,
+    ) -> None:
         self.collection.add(
             ids=[d.id for d in documents],
             documents=[d.text for d in documents],
@@ -43,9 +45,15 @@ class ChromaDB:
     def list_collections(self) -> List[str]:
         return [collection.name for collection in self.client.list_collections()]
 
-    def delete_collection(self, collection_name: str) -> None:
-        self.client.delete_collection(name=collection_name)
+    def delete_collection(self):
+        self.client.delete_collection(name=self.collection_name)
 
     def search(self, text: str, top_k: int):
-        assert self.collection is not None, "Collection not initialized"
         return self.collection.query(query_texts=[text], n_results=top_k)
+
+    def document_exists(self, document_id: str) -> bool:
+        try:
+            result = self.collection.get(ids=[document_id])
+            return len(result["ids"]) > 0
+        except Exception:
+            return False

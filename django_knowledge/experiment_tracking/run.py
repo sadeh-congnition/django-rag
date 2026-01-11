@@ -1,16 +1,14 @@
-import random
 import json
+import random
 from time import time
 
-from chromadb.errors import NotFoundError
 from chunking.chunker import get_chunk_descriptions, get_chunks
 from chunking.models import Chunk
 from loguru import logger
 from vectordb.db import ChromaDB, Doc
 
+from .constants import COLLECTION_NAME
 from .models import EmbeddingModelKlass
-
-db = ChromaDB()
 
 
 def testcases(num: int) -> list:
@@ -28,39 +26,55 @@ num_tests = 20
 chunk_descriptions_to_test = testcases(num_tests)
 
 
-def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: int):
+def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: int, chunk_config_id: int):
     logger.info(
         f"Starting experiment with {len(embedding_functions)} embedding functions"
     )
-    collection_name = "embedding_model_eval"
 
     logger.info("Getting chunks for processing")
-    chunks = get_chunks()
+    chunks = get_chunks(chunk_config_id=chunk_config_id)
     logger.info(f"Retrieved {len(chunks)} chunks")
 
     bad_results = {}
 
     for i, ef in enumerate(embedding_functions):
+        collection_name = f"{COLLECTION_NAME}_{ef.name()}"
+        db = ChromaDB(
+            collection_name=collection_name,
+            embedding_generator=ef,
+            path="chromadb_data",
+        )
+        logger.info(
+            f"Collection {collection_name} has {db.collection.count()} documents"
+        )
         bad_results[ef.name()] = []
         scores = []
         num_tests_all = []
         search_times_all = []
 
-        try:
-            logger.info(f"Deleting collection '{collection_name}' if it exists")
-            db.delete_collection(collection_name)
-            logger.info("Collection deleted successfully")
-        except NotFoundError:
-            logger.info(f"Collection '{collection_name}' does not exist, continuing")
-            pass
+        # try:
+        #     logger.info(f"Deleting collection '{collection_name}' if it exists")
+        #     db.delete_collection(collection_name)
+        #     logger.info("Collection deleted successfully")
+        # except NotFoundError:
+        #     logger.info(f"Collection '{collection_name}' does not exist, continuing")
+        #     pass
 
-        logger.info(f"Adding documents to collection '{collection_name}'")
+        logger.info("Adding documents to collection")
         embedding_start_time = time()
-        db.add(
-            collection_name=collection_name,
-            embedding_generator=ef,
-            documents=[Doc(text=c.content, id=str(c.id)) for c in chunks],
-        )
+        for chu in chunks:
+            document_id = str(chu.id)
+            if db.document_exists(
+                document_id=document_id,
+            ):
+                logger.info(f"Document {document_id} already exists, skipping")
+                continue
+            else:
+                db.add(
+                    documents=[Doc(text=chu.content, id=document_id)],
+                )
+                logger.info(f"Added document with ID: {document_id}")
+
         embedding_time = int(time() - embedding_start_time)
         logger.info(
             f"Successfully added {len(chunks)} documents with embedding function {ef.name()}"
@@ -102,7 +116,7 @@ def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: i
             search_times_all.append(search_time_elapsed)
 
         yield ef.name(), num_tests_all, scores, search_times_all, embedding_time
-        break
+        logger.info("Deleted collection")
 
     logger.info("Experiment completed successfully")
 

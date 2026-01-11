@@ -119,6 +119,8 @@ The application uses the following main models:
 Each page includes metadata like creation/update timestamps and content hashes for change detection.
 
 # Experiment Tracking
-uv run manage.py load_project ..
+uv run manage.py fetch_from_github --repo TandoorRecipes/recipes
+uv run manage.py load_project fetched_code/TandoorRecipes_recipes --delete
 uv run manage.py chunk_code
+uv run manage.py get_code_stats
 uv run manage.py describe_chunk

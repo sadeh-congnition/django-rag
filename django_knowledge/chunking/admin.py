@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Chunk, ChunkDescription
+from .models import Chunk, ChunkDescription, ChunkConfig
+
+
+class ChunkDescriptionInline(admin.TabularInline):
+    model = ChunkDescription
+    extra = 0
+    readonly_fields = ('created_at', 'updated_at')
+    fields = ('description', 'created_at', 'updated_at')
 
 
 @admin.register(Chunk)
@@ -9,6 +16,7 @@ class ChunkAdmin(admin.ModelAdmin):
     search_fields = ('content', 'python_file__module_path', 'python_file__project__name')
     readonly_fields = ('created_at', 'updated_at')
     ordering = ('-updated_at',)
+    inlines = [ChunkDescriptionInline]
     
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('python_file', 'python_file__project')
@@ -32,3 +40,18 @@ class ChunkDescriptionAdmin(admin.ModelAdmin):
             'chunk__python_file', 
             'chunk__python_file__project'
         )
+
+
+@admin.register(ChunkConfig)
+class ChunkConfigAdmin(admin.ModelAdmin):
+    list_display = ('id', 'content_preview', 'created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at')
+    search_fields = ('content',)
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('-created_at',)
+    
+    def content_preview(self, obj):
+        import json
+        content_str = json.dumps(obj.content, indent=2)
+        return content_str[:100] + '...' if len(content_str) > 100 else content_str
+    content_preview.short_description = 'Content'

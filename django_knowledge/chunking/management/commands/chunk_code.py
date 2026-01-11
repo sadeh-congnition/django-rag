@@ -1,9 +1,8 @@
 import djclick as click
-from django.db import transaction
 from chonkie import CodeChunker
 from loguru import logger
 from synthetic_data_generator.models import PythonFile
-from chunking.models import Chunk
+from chunking.models import Chunk, ChunkConfig
 import tiktoken
 from dataclasses import dataclass
 
@@ -29,6 +28,17 @@ enc = tiktoken.get_encoding("cl100k_base")
 )
 def chunk_code(chunk_size, language, clear_existing=False):
     """Chunk all PythonFile content using CodeChunker from chonkie package."""
+    
+    # Create chunk configuration
+    chunk_config = ChunkConfig.objects.create(
+        content={
+            'chunk_size': chunk_size,
+            'language': language,
+            'tokenizer': 'character',
+            'chunking_method': 'chonkie.CodeChunker'
+        }
+    )
+    logger.info(f"Created chunk configuration with ID: {chunk_config.id}")
     
     if clear_existing:
         count = Chunk.objects.count()
@@ -68,6 +78,7 @@ def chunk_code(chunk_size, language, clear_existing=False):
                     chunk_objects.append(
                         Chunk(
                             python_file=python_file,
+                            config=chunk_config,
                             content=chunk.text
                         )
                     )
