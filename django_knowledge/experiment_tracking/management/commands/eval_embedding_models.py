@@ -1,7 +1,7 @@
 import djclick as click
 
 from chunking.models import ChunkConfig
-from experiment_tracking.models import EmbeddingModel, EmbedderEval, EmbedderEvalConfig
+from experiment_tracking.models import EmbeddingModel, EmbedderEval, EmbedderEvalConfig, BadResult
 from experiment_tracking.run import run_experiment
 
 
@@ -12,6 +12,7 @@ def eval_embedding_models(chunk_config_id):
     
     chunk_config = ChunkConfig.objects.get(id=chunk_config_id)
 
+    metric_name = "Embedder Accuracy@1"
     num_rounds = 1
 
     for (
@@ -20,6 +21,7 @@ def eval_embedding_models(chunk_config_id):
         scores,
         search_times,
         embedding_time,
+        bad_results,
     ) in run_experiment(EmbeddingModel.embed_funcs(), num_rounds=num_rounds, chunk_config_id=chunk_config_id):
         embedding_model = EmbeddingModel.objects.get(name=embedding_model_name)
 
@@ -33,6 +35,7 @@ def eval_embedding_models(chunk_config_id):
             chunk_config=chunk_config,
             content={
                 "metrics": {
+                    "name": metric_name,
                     "average_eval_time": avrg_eval_time,
                     "average_score": sum(scores) / len(scores),
                     "num_tests": num_tests,
@@ -42,15 +45,14 @@ def eval_embedding_models(chunk_config_id):
                 }
             }
         )
-
-        name = "Embedder Accuracy@1"
+        
         description = (
             f"Evaluating embedder models performance, {num_rounds} rounds per model"
         )
-        EmbedderEval.objects.create(
+        embedder_eval = EmbedderEval.objects.create(
             embedding_model=embedding_model,
             config=embedder_eval_config,
-            name=name,
+            name=metric_name,
             description=description,
             num_tests=num_tests,
             search_times=search_times,
@@ -59,3 +61,9 @@ def eval_embedding_models(chunk_config_id):
             eval_scores=scores,
             average_score=sum(scores) / len(scores),
         )
+        
+        for bad_result in bad_results:
+            BadResult.objects.create(
+                embedder_eval=embedder_eval,
+                content=bad_result
+            )

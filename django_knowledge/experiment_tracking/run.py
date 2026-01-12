@@ -5,10 +5,11 @@ from time import time
 from chunking.chunker import get_chunk_descriptions, get_chunks
 from chunking.models import Chunk
 from loguru import logger
-from vectordb.db import ChromaDB, Doc
+from vectordb.db import ChromaDB
 
 from .constants import COLLECTION_NAME
 from .models import EmbeddingModelKlass
+from embedding_generator.persistence import save_embeddings
 
 
 def testcases(num: int) -> list:
@@ -47,7 +48,7 @@ def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: i
         logger.info(
             f"Collection {collection_name} has {db.collection.count()} documents"
         )
-        bad_results[ef.name()] = []
+        bad_results = []
         scores = []
         num_tests_all = []
         search_times_all = []
@@ -61,25 +62,7 @@ def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: i
         #     pass
 
         logger.info("Adding documents to collection")
-        embedding_start_time = time()
-        for chu in chunks:
-            document_id = str(chu.id)
-            if db.document_exists(
-                document_id=document_id,
-            ):
-                logger.info(f"Document {document_id} already exists, skipping")
-                continue
-            else:
-                db.add(
-                    documents=[Doc(text=chu.content, id=document_id)],
-                )
-                logger.info(f"Added document with ID: {document_id}")
-
-        embedding_time = int(time() - embedding_start_time)
-        logger.info(
-            f"Successfully added {len(chunks)} documents with embedding function {ef.name()}"
-        )
-        logger.info(f"Embedding time: {embedding_time} seconds")
+        embedding_time = save_embeddings(db, chunks)
 
         for _ in range(num_rounds):
             logger.info(
@@ -95,15 +78,14 @@ def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: i
                 if found_chunk_id == int(chunk_desc.chunk.id):
                     score += 1
                 else:
-                    bad_results[ef.name()].append(
-                        {
-                            "correct_chunk_id": chunk_desc.chunk.id,
-                            "returned_chunk_id": found_chunk_id,
-                            "search_query": chunk_desc.description,
-                            "correct_chunk_code": chunk_desc.chunk.content,
-                            "wrong_chunk_code": found_chunk.content,
-                        }
-                    )
+                    bad_result_data = {
+                        "correct_chunk_id": chunk_desc.chunk.id,
+                        "returned_chunk_id": found_chunk_id,
+                        "search_query": chunk_desc.description,
+                        "correct_chunk_content": chunk_desc.chunk.content,
+                        "wrong_chunk_content": found_chunk.content,
+                    }
+                    bad_results.append(bad_result_data)
 
             search_time_elapsed = int(time() - start_time)
 
@@ -115,8 +97,7 @@ def run_experiment(embedding_functions: list[EmbeddingModelKlass], num_rounds: i
             num_tests_all.append(num_tests)
             search_times_all.append(search_time_elapsed)
 
-        yield ef.name(), num_tests_all, scores, search_times_all, embedding_time
-        logger.info("Deleted collection")
+        yield ef.name(), num_tests_all, scores, search_times_all, embedding_time, bad_results
 
     logger.info("Experiment completed successfully")
 

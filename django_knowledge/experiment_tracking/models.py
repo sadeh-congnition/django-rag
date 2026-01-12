@@ -137,3 +137,19 @@ class EmbedderEval(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.embedding_model.name}"
+
+
+class BadResult(models.Model):
+    embedder_eval = models.ForeignKey(
+        EmbedderEval, on_delete=models.CASCADE, related_name="bad_results"
+    )
+    content = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Bad Result"
+        verbose_name_plural = "Bad Results"
+
+    def __str__(self):
+        return f"Bad Result for {self.embedder_eval.name}"
