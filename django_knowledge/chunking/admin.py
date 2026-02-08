@@ -53,5 +53,5 @@ class ChunkConfigAdmin(admin.ModelAdmin):
     def content_preview(self, obj):
         import json
         content_str = json.dumps(obj.content, indent=2)
-        return content_str[:100] + '...' if len(content_str) > 100 else content_str
+        return content_str[:500] + '...' if len(content_str) > 500 else content_str
     content_preview.short_description = 'Content'

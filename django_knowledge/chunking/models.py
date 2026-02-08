@@ -17,6 +17,7 @@ class ChunkConfig(models.Model):
 
 
 class Chunk(models.Model):
+    id = models.AutoField(primary_key=True)
     python_file = models.ForeignKey(PythonFile, on_delete=models.CASCADE)
     config = models.ForeignKey(
         ChunkConfig, on_delete=models.SET_NULL, null=True, blank=True
@@ -24,6 +25,7 @@ class Chunk(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    id: int
 
     class Meta:
         verbose_name = "Chunk"

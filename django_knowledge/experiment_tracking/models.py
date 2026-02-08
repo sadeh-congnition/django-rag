@@ -1,5 +1,4 @@
 from django.db import models
-from loguru import logger
 from chromadb import EmbeddingFunction
 from embedding_generator.using_lm_studio import get_embeddings
 
@@ -9,13 +8,14 @@ class EmbeddingModel(models.Model):
     url = models.URLField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    id: int
 
     class Meta:
         verbose_name = "Embedding Model"
         verbose_name_plural = "Embedding Models"
 
     def __str__(self):
-        return self.name
+        return f"{self.id}: {self.name}"
 
     @classmethod
     def create_defaults(cls):
@@ -76,6 +76,11 @@ class EmbeddingModel(models.Model):
     def embed_funcs(cls) -> list["EmbeddingModelKlass"]:
         return [EmbeddingModelKlass(row.name) for row in cls.objects.all()]
 
+    @classmethod
+    def embedding_function(cls, id: int):
+        row = cls.objects.get(id=id)
+        return EmbeddingModelKlass(row.name)
+
 
 class EmbeddingModelKlass(EmbeddingFunction):
     def __init__(self, name):
@@ -93,21 +98,39 @@ class EmbeddingModelKlass(EmbeddingFunction):
         return res
 
 
-class EmbedderEvalConfig(models.Model):
-    chunk_config = models.ForeignKey(
-        'chunking.ChunkConfig', 
-        on_delete=models.SET_NULL, 
-        null=True, 
-        blank=True,
-        related_name="embedder_eval_configs"
-    )
+class MetricConfig(models.Model):
     content = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    id: int
 
     class Meta:
-        verbose_name = "Embedder Evaluation Configuration"
-        verbose_name_plural = "Embedder Evaluation Configurations"
+        verbose_name = "Metric Configuration"
+        verbose_name_plural = "Metric Configurations"
+
+    def __str__(self):
+        return f"Config {self.id}"
+
+    def num_tests(self):
+        return self.content["metric"]["num_tests"]
+
+
+class EmbedderPerformance(models.Model):
+    embedding_model = models.ForeignKey(
+        EmbeddingModel, on_delete=models.CASCADE, null=True, blank=True
+    )
+    metric_config = models.ForeignKey(
+        MetricConfig, on_delete=models.CASCADE, null=True, blank=True
+    )
+    search_time = models.FloatField()
+    embedding_time = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    id: int
+
+    class Meta:
+        verbose_name = "Embedder Performance Details"
+        verbose_name_plural = "Embedder Performance Details"
 
     def __str__(self):
         return f"Config {self.id}"
@@ -117,17 +140,37 @@ class EmbedderEval(models.Model):
     embedding_model = models.ForeignKey(
         EmbeddingModel, on_delete=models.CASCADE, related_name="evaluations"
     )
-    config = models.ForeignKey(
-        EmbedderEvalConfig, on_delete=models.CASCADE, related_name="evaluations", null=True, blank=True
+    chunk_config = models.ForeignKey(
+        "chunking.ChunkConfig",
+        on_delete=models.CASCADE,
+        related_name="embedder_evals",
+        blank=True,
+        null=True,
+    )
+    metric_config = models.ForeignKey(
+        MetricConfig,
+        on_delete=models.CASCADE,
+        related_name="evaluations",
+        blank=True,
+        null=True,
+    )
+    embedder_performance = models.ForeignKey(
+        EmbedderPerformance,
+        on_delete=models.CASCADE,
+        related_name="evaluations",
+        blank=True,
+        null=True,
+    )
+    sample = models.ForeignKey(
+        "Sample",
+        on_delete=models.SET_NULL,
+        related_name="embedder_evals",
+        blank=True,
+        null=True,
     )
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    num_tests = models.JSONField()
-    search_times = models.JSONField()
-    embedding_time = models.FloatField()
-    average_eval_time = models.FloatField()
-    eval_scores = models.JSONField()
-    average_score = models.FloatField()
+    score = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -153,3 +196,18 @@ class BadResult(models.Model):
 
     def __str__(self):
         return f"Bad Result for {self.embedder_eval.name}"
+
+
+class Sample(models.Model):
+    chunk_description_ids = models.JSONField(default=list, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    id: int
+
+    class Meta:
+        verbose_name = "Sample"
+        verbose_name_plural = "Samples"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Sample {self.id}"

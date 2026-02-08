@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "beautifulsoup4>=4.14.3",
     "chonkie[code]>=1.5.1",
-    "django>=6.0",
+    "django==5.1",
     "django-click>=2.4.1",
     "django-extensions>=4.1",
     "httpx>=0.28.1",
@@ -27,4 +27,10 @@ dependencies = [
     "streamlit>=1.52.2",
     "pandas>=2.3.3",
     "plotly>=6.5.0",
+    "django-types>=0.22.0",
+    "django-daisy",
+    "django-ninja>=1.5.3",
 ]
+
+[tool.uv.sources]
+django-daisy = { git = "https://github.com/hypy13/django-daisy.git" }
