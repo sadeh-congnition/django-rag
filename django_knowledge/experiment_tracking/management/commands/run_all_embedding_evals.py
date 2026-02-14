@@ -9,6 +9,8 @@ def run_all_embedding_evals():
     embedding_eval_models = EmbeddingModel.objects.order_by("id").all()
     samples = Sample.objects.all()
     for embedding_eval_model in embedding_eval_models:
+        if embedding_eval_model.id in [1, 2, 4, 5]:
+            continue
         for sample in samples:
             call_command(
                 "eval_embedding_models",

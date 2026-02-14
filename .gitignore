@@ -11,3 +11,7 @@ wheels/
 
 # github code downloaded
 django_knowledge/fetched_code
+django_knowledge/chromadb_data
+
+# cb
+db.sqlite3

@@ -175,19 +175,26 @@ if performance_data:
         fig_embed.update_layout(showlegend=False)
         st.plotly_chart(fig_embed, use_container_width=True)
 
-# Timeline view
-st.header("📅 Timeline View")
+# All-scores view
+st.header("� All Scores (All Models)")
 
-fig_timeline = px.line(
-    df.sort_values('created_at'),
-    x='created_at',
+sorted_df = df.sort_values('created_at').copy()
+sorted_df['evaluation_order'] = range(1, len(sorted_df) + 1)
+
+fig_all_scores = px.scatter(
+    sorted_df,
+    x='evaluation_order',
     y='score_percentage',
     color='model_name',
-    title="Score Percentage Over Time",
-    markers=True,
-    hover_data=['name', 'description']
+    title="All Evaluation Score Percentages (All Selected Models)",
+    hover_data=['name', 'description'],
 )
-st.plotly_chart(fig_timeline, use_container_width=True)
+fig_all_scores.update_traces(marker={'size': 10, 'opacity': 0.85})
+fig_all_scores.update_layout(
+    xaxis_title="Evaluation (ordered by created_at)",
+    yaxis_title="Score Percentage",
+)
+st.plotly_chart(fig_all_scores, use_container_width=True)
 
 # Detailed data table
 st.header("📋 Detailed Evaluation Data")
